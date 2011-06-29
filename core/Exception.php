@@ -3,7 +3,7 @@
 /**
  * Fountain CMS Site Card Edition
  * 
- * Ligthweight content management system for site cards and minisites
+ * Lightweight content management system for site cards and minisites
  * 
  * @author    Kanat Gailimov <gailimov@gmail.com>
  * @copyright Copyright (c) Kanat Gailimov (http://gailimov.info) 2011
