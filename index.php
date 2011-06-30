@@ -24,4 +24,4 @@ require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'controller'
                                 . DIRECTORY_SEPARATOR . 'Controller.php';
 
 /** Running of the front controller */
-Controller::run();
+Controller::getInstance()->run();

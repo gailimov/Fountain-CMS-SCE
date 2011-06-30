@@ -70,10 +70,6 @@ class Router
         $segments = $this->getUriSegments();
 
         $params = array();
-        
-        echo '<pre>';
-        print_r($segments);
-        echo '</pre>';
 
         if ($segments[0] == 'index.php') {
             if (isset($segments[1]) && !empty($segments[1]))

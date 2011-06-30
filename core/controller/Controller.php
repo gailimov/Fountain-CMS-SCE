@@ -26,8 +26,30 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . 'core'
  */
 class Controller
 {
+    /**
+     * Singleton instance
+     * 
+     * @var \core\controller\Controller
+     */
+    private static $_instance;
+
     private function __construct()
     {}
+
+    private function __clone()
+    {}
+
+    /**
+     * Get singleton instance
+     * 
+     * @return \core\controller\Controller
+     */
+    public static function getInstance()
+    {
+        if (!self::$_instance)
+            self::$_instance = new self();
+        return self::$_instance;
+    }
 
     /**
      * Running of router
