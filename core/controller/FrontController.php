@@ -20,7 +20,7 @@ use core\controller\Router;
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class Controller
+class FrontController
 {
     /**
      * Singleton instance

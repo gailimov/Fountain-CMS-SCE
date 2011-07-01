@@ -13,18 +13,17 @@
 
 /** Single entry point */
 
-use core\Loader;
-use core\controller\Controller;
+use core\Loader,
+    core\controller\FrontController;
 
 /** Defining of paths */
-defined('ROOT_PATH') || define('ROOT_PATH',
-                               dirname(__FILE__) . DIRECTORY_SEPARATOR);
-defined('APP_PATH')  || define('APP_PATH',
-                               ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
+defined('ROOT_PATH')   || define('ROOT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
+defined('APP_PATH')    || define('APP_PATH', ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
+defined('VENDOR_PATH') || define('VENDOR_PATH', ROOT_PATH . 'vendor' . DIRECTORY_SEPARATOR);
 
 /** Autoloading */
 require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'Loader.php';
 Loader::register();
 
 /** Running of the front controller */
-Controller::getInstance()->run();
+FrontController::getInstance()->run();

@@ -12,4 +12,7 @@
 
 
 /** Application config */
-return array('defaultController' => 'SiteController');
+return array('defaultController' => 'SiteController',
+             'themesFolder'      => 'themes',
+             'defaultTheme'      => 'default',
+             'themesExtension'   => '.tpl');

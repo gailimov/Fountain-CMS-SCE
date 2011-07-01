@@ -13,9 +13,9 @@
 
 namespace core\controller;
 
-use core\Core;
-use core\Config;
-use core\controller\Exception;
+use core\Core,
+    core\Config,
+    core\controller\Exception;
 
 /**
  * Router
@@ -94,8 +94,7 @@ class Router
         // If there is no action - set the default action
         if (empty($action)) $action = 'index';
 
-        $controllerFile = ROOT_PATH . 'app' . DIRECTORY_SEPARATOR . 'controllers'
-                                            . DIRECTORY_SEPARATOR . $controller . '.php';
+        $controllerFile = APP_PATH . 'controllers' . DIRECTORY_SEPARATOR . $controller . '.php';
 
         try {
             if (!file_exists($controllerFile))

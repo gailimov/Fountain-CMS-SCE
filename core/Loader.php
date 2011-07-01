@@ -13,6 +13,8 @@
 
 namespace core;
 
+require_once VENDOR_PATH . 'Smarty' . DIRECTORY_SEPARATOR . 'libs' . DIRECTORY_SEPARATOR . 'Smarty.class.php';
+
 /**
  * Class loader
  * 
@@ -35,6 +37,8 @@ class Loader
     {
         if (!spl_autoload_register(array(__CLASS__, 'load')))
             throw new \core\Exception('Could not register ' . __CLASS__ . '\'s autoload function!');
+        if (!spl_autoload_register('smartyAutoload'))
+            throw new \core\Exception('Could not register Smarty\'s autoload function!');
     }
 
     /**

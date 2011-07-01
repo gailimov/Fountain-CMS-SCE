@@ -48,6 +48,6 @@ class Config
         } catch (\core\Exception $e) {
             die($e->getMessage());
         }
-        return self::$_config = require_once $configPath;
+        return self::$_config = require $configPath;
     }
 }
