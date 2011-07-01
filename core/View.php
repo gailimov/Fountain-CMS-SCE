@@ -13,8 +13,6 @@
 
 namespace core;
 
-use core\Registry;
-
 /**
  * View class
  * 

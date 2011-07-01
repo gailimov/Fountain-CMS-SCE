@@ -22,13 +22,6 @@ require_once VENDOR_PATH . 'Smarty' . DIRECTORY_SEPARATOR . 'libs' . DIRECTORY_S
  */
 class Loader
 {
-    /**
-     * Paths to classes
-     * 
-     * @var array
-     */
-    private static $_paths = array(ROOT_PATH, VENDOR_PATH);
-
     private function __construct()
     {}
 
@@ -36,23 +29,16 @@ class Loader
     {}
 
     /**
-     * Registration path to class
-     */
-    public static function registerPath($path)
-    {
-        if (!in_array($path, self::$_paths))
-            self::$_paths[] = $path;
-    }
-
-    /**
      * Registration functions of autoloading
      * 
      * @return void
      */
-    public static function registerAutoload()
+    public static function register()
     {
         if (!spl_autoload_register(array(__CLASS__, 'load')))
             throw new \core\Exception('Could not register ' . __CLASS__ . '\'s autoload function!');
+        if (!spl_autoload_register(array(__CLASS__, 'loadZendFramework')))
+            throw new \core\Exception('Could not register Zend Framework\'s autoload function!');
         if (!spl_autoload_register('smartyAutoload'))
             throw new \core\Exception('Could not register Smarty\'s autoload function!');
     }
@@ -66,9 +52,30 @@ class Loader
     private static function load($className)
     {
         $path = str_replace('\\', DIRECTORY_SEPARATOR, $className);
-        foreach (self::$_paths as $paths) {
-            if (file_exists($paths . $path . '.php'))
-                require_once $paths . $path . '.php';
+        try {
+            if (!file_exists(ROOT_PATH . $path . '.php'))
+                throw new \core\Exception('Class ' . $className . ' not found!');
+        } catch (\core\Exception $e) {
+            die($e->getMessage());
         }
+        require_once ROOT_PATH . $path . '.php';
+    }
+
+    /**
+     * Autoloading of Zend Framework's libraries
+     * 
+     * @param  string $className Class name
+     * @return void
+     */
+    private static function loadZendFramework($className)
+    {
+        $path = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+        try {
+            if (!file_exists(VENDOR_PATH . $path . '.php'))
+                throw new \core\Exception('Class ' . $className . ' not found!');
+        } catch (\core\Exception $e) {
+            die($e->getMessage());
+        }
+        require_once VENDOR_PATH . $path . '.php';
     }
 }

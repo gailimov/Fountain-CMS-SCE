@@ -1,7 +1,9 @@
 <?php
 
-use core\View,
-    core\Registry;
+use core\Db,
+    core\View,
+    core\Registry,
+    app\models\Post;
 
 class SiteController
 {
@@ -11,5 +13,12 @@ class SiteController
         $smarty = Registry::get('smarty');
         $smarty->assign('name', $name);
         $smarty->display('index.tpl');
+    }
+    
+    public function post()
+    {
+        $model = new Post();
+        $posts = $model->getPosts();
+        print_r($posts);
     }
 }

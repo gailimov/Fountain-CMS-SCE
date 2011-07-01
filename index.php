@@ -24,7 +24,7 @@ defined('VENDOR_PATH') || define('VENDOR_PATH', ROOT_PATH . 'vendor' . DIRECTORY
 
 /** Autoloading */
 require_once CORE_PATH . 'Loader.php';
-Loader::register();
+Loader::registerAutoload();
 
 /** Running of the front controller */
 FrontController::getInstance()->run();

@@ -12,7 +12,15 @@
 
 
 /** Application config */
-return array('defaultController' => 'SiteController',
-             'themesFolder'      => 'themes',
-             'defaultTheme'      => 'default',
-             'themesExtension'   => '.tpl');
+return array(
+    'defaultController' => 'SiteController',
+    'themesFolder' => 'themes',
+    'defaultTheme' => 'default',
+    'themesExtension' => '.tpl',
+    'db' => array(
+        'host'     => 'localhost',
+        'username' => 'root',
+        'password' => '1',
+        'dbname'   => 'projects_sfblog'
+    )
+);
