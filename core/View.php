@@ -22,20 +22,13 @@ use core\Registry;
  */
 class View
 {
-    /**
-     * Smarty
-     * 
-     * @var Smarty.class.php
-     */
-    private $_smarty;
-
     public function __construct()
     {
         $config = Config::load('application');
-        $this->_smarty = new \Smarty();
-        $this->_smarty->template_dir = APP_PATH . $config['themesFolder'] . DIRECTORY_SEPARATOR
+        $smarty = new \Smarty();
+        $smarty->template_dir = APP_PATH . $config['themesFolder'] . DIRECTORY_SEPARATOR
                                                 . $config['defaultTheme'] . DIRECTORY_SEPARATOR;
-        $this->_smarty->compile_dir  = ROOT_PATH . 'data' . DIRECTORY_SEPARATOR . 'themes_c' . DIRECTORY_SEPARATOR;
-        Registry::set('smarty', $this->_smarty);
+        $smarty->compile_dir  = ROOT_PATH . 'data' . DIRECTORY_SEPARATOR . 'themes_c' . DIRECTORY_SEPARATOR;
+        Registry::set('smarty', $smarty);
     }
 }
