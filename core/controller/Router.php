@@ -13,6 +13,7 @@
 
 namespace core\controller;
 
+use core\Core;
 use core\Config;
 use core\controller\Exception;
 
@@ -106,11 +107,8 @@ class Router
         require_once $controllerFile;
 
         // If the class of controller is not loaded or there is no necessary method - 404
-        // TODO: Write method for 404 errors
-        if (!is_callable(array($controller, $action))) {
-            header("HTTP/1.1 404 Not Found");
-            die('404');
-        }
+        if (!is_callable(array($controller, $action)))
+            Core::show404();
 
         // Create instance of controller class
         $obj = new $controller();
