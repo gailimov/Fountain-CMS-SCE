@@ -16,9 +16,11 @@
 use core\Loader;
 use core\controller\Controller;
 
-/** Defining of root path */
-defined('ROOT_PATH') || define('ROOT_PATH', 
+/** Defining of paths */
+defined('ROOT_PATH') || define('ROOT_PATH',
                                dirname(__FILE__) . DIRECTORY_SEPARATOR);
+defined('APP_PATH')  || define('APP_PATH',
+                               ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
 
 /** Autoloading */
 require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'Loader.php';

@@ -13,6 +13,7 @@
 
 namespace core\controller;
 
+use core\Config;
 use core\controller\Exception;
 
 /**
@@ -68,10 +69,6 @@ class Router
         $segments = $this->getUriSegments();
 
         $params = array();
-        
-        echo '<pre>';
-        print_r($segments);
-        echo '</pre>';
 
         if ($segments[0] == 'index.php') {
             if (isset($segments[1]) && !empty($segments[1]))
@@ -90,8 +87,8 @@ class Router
         }
 
         // If there is no controller - set the default controller
-        // TODO: Set default controller from config
-        if (empty($controller)) $controller = 'SiteController';
+        $config = Config::load('application');
+        if (empty($controller)) $controller = $config['defaultController'];
 
         // If there is no action - set the default action
         if (empty($action)) $action = 'index';
