@@ -13,15 +13,16 @@
 
 /** Single entry point */
 
+use core\Loader;
 use core\controller\Controller;
 
 /** Defining of root path */
 defined('ROOT_PATH') || define('ROOT_PATH', 
                                dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
-/** Loading of the front controller */
-require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'controller'
-                                . DIRECTORY_SEPARATOR . 'Controller.php';
+/** Autoloading */
+require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'Loader.php';
+Loader::register();
 
 /** Running of the front controller */
 Controller::getInstance()->run();

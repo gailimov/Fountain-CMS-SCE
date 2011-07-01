@@ -15,8 +15,6 @@ namespace core\controller;
 
 use core\controller\Exception;
 
-require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR . 'Exception.php';
-
 /**
  * Router
  * 
@@ -70,18 +68,22 @@ class Router
         $segments = $this->getUriSegments();
 
         $params = array();
+        
+        echo '<pre>';
+        print_r($segments);
+        echo '</pre>';
 
         if ($segments[0] == 'index.php') {
             if (isset($segments[1]) && !empty($segments[1]))
                 $controller = ucfirst($segments[1] . 'Controller');
-            elseif (isset($segments[2]) && !empty($segments[2]))
+            if (isset($segments[2]) && !empty($segments[2]))
                 $action = $segments[2];
             if (count($segments) > 3)
                 $params = array_slice($segments, 3);
         } else {
             if (isset($segments[0]) && !empty($segments[0]))
                 $controller = ucfirst($segments[0] . 'Controller');
-            elseif (isset($segments[1]) && !empty($segments[1]))
+            if (isset($segments[1]) && !empty($segments[1]))
                 $action = $segments[1];
             if (count($segments) > 2)
                 $params = array_slice($segments, 2);
@@ -89,8 +91,7 @@ class Router
 
         // If there is no controller - set the default controller
         // TODO: Set default controller from config
-        if (empty($controller))
-            $controller = 'SiteController';
+        if (empty($controller)) $controller = 'SiteController';
 
         // If there is no action - set the default action
         if (empty($action)) $action = 'index';
@@ -110,7 +111,7 @@ class Router
         // If the class of controller is not loaded or there is no necessary method - 404
         // TODO: Write method for 404 errors
         if (!is_callable(array($controller, $action))) {
-            header("HTTP/1.0 404 Not Found");
+            header("HTTP/1.1 404 Not Found");
             die('404');
         }
 

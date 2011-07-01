@@ -15,10 +15,6 @@ namespace core\controller;
 
 use core\controller\Router;
 
-require_once ROOT_PATH . DIRECTORY_SEPARATOR . 'core'
-                       . DIRECTORY_SEPARATOR . 'controller'
-                       . DIRECTORY_SEPARATOR . 'Router.php';
-
 /**
  * Front Controller
  * 

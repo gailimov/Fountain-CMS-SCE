@@ -15,8 +15,6 @@ namespace core\controller;
 
 use core\Exception as CoreException;
 
-require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'Exception.php';
-
 /**
  * Handler of controller exceptions
  * 
