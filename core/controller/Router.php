@@ -25,6 +25,18 @@ use core\Core,
 class Router
 {
     /**
+     * Routes
+     * 
+     * @var array
+     */
+    private $_routes;
+
+    public function __construct()
+    {
+        $this->_routes = Config::load('routes');
+    }
+
+    /**
      * Get URI
      * 
      * @return array
@@ -71,20 +83,49 @@ class Router
 
         $params = array();
 
-        if ($segments[0] == 'index.php') {
-            if (isset($segments[1]) && !empty($segments[1]))
-                $controller = ucfirst($segments[1] . 'Controller');
-            if (isset($segments[2]) && !empty($segments[2]))
-                $action = $segments[2];
-            if (count($segments) > 3)
-                $params = array_slice($segments, 3);
-        } else {
-            if (isset($segments[0]) && !empty($segments[0]))
-                $controller = ucfirst($segments[0] . 'Controller');
-            if (isset($segments[1]) && !empty($segments[1]))
-                $action = $segments[1];
-            if (count($segments) > 2)
-                $params = array_slice($segments, 2);
+        $uri = implode('/', $segments);
+
+        foreach ($this->_routes as $pattern => $route) {
+            // if routes matched
+            if (preg_match($pattern, $uri)) {
+                $internalRoute = preg_replace($pattern, $route, $uri);
+                $internalRoute = explode('/', $internalRoute);
+                if ($internalRoute[0] == 'index.php') {
+                    if (isset($internalRoute[1]) && !empty($internalRoute[1]))
+                        $controller = ucfirst($internalRoute[1] . 'Controller');
+                    if (isset($internalRoute[2]) && !empty($internalRoute[2]))
+                        $action = $internalRoute[2];
+                    if (count($internalRoute) > 3)
+                        $params = array_slice($internalRoute, 3);
+                } else {
+                    if (isset($internalRoute[0]) && !empty($internalRoute[0]))
+                        $controller = ucfirst($internalRoute[0] . 'Controller');
+                    if (isset($internalRoute[1]) && !empty($internalRoute[1]))
+                        $action = $internalRoute[1];
+                    if (count($internalRoute) > 2)
+                        $params = array_slice($internalRoute, 2);
+                }
+                $flag = true;
+            }
+        }
+
+        // If routes not matched or routes not exists - run default routing
+        if (!isset($flag)) {
+            if ($segments[0] == 'index.php') {
+                if (isset($segments[1]) && !empty($segments[1]))
+                    $controller = ucfirst($segments[1] . 'Controller');
+                if (isset($segments[2]) && !empty($segments[2]))
+                    $action = $segments[2];
+                if (count($segments) > 3)
+                    $params = array_slice($segments, 3);
+            } else {
+                if (isset($segments[0]) && !empty($segments[0]))
+                    $controller = ucfirst($segments[0] . 'Controller');
+                if (isset($segments[1]) && !empty($segments[1]))
+                    $action = $segments[1];
+                if (count($segments) > 2)
+                    $params = array_slice($segments, 2);
+            }
         }
 
         // If there is no controller - set the default controller

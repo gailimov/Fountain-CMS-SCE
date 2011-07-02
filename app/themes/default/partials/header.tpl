@@ -16,7 +16,7 @@
                 <ul>
                     <li><a href="{$url}" rel="home">Главная</a></li>
                 {foreach $menu as $nav}
-                    <li><a href="{$url}/site/page/{$nav.slug}">{$nav.title}</a></li>
+                    <li><a href="{$url}/page/{$nav.slug}">{$nav.title}</a></li>
                 {/foreach}
                 </ul>
             </nav>
