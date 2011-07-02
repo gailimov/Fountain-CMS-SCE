@@ -72,14 +72,14 @@ class BaseController extends Controller
                                . DIRECTORY_SEPARATOR . $this->_config['defaultTheme']
                                . DIRECTORY_SEPARATOR);
         $this->_configModel = new ConfigModel();
-        $this->_settings = $this->_configModel->getConfig();
+        $this->_settings = $this->_configModel->get();
         $this->_smarty->assign('url', $this->_settings['url']);
         $this->_smarty->assign('title', $this->_settings['title']);
         $this->_smarty->assign('mainTitle', $this->_settings['title']);
         $this->_smarty->assign('description', $this->_settings['description']);
         $this->_pageModel = new PageModel();
-        $this->_smarty->assign('menu', $this->_pageModel->getPagesWithoutCategory());
+        $this->_smarty->assign('menu', $this->_pageModel->getWithoutCategory());
         $this->_categoryModel = new CategoryModel();
-        $this->_smarty->assign('categories', $this->_categoryModel->getCategories());
+        $this->_smarty->assign('categories', $this->_categoryModel->getAll());
     }
 }

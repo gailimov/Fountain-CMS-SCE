@@ -11,7 +11,8 @@
  */
 
 
-use app\controllers\BaseController;
+use app\controllers\BaseController,
+    core\Core;
 
 /**
  * Site controller
@@ -27,18 +28,33 @@ class SiteController extends BaseController
 
     public function index()
     {
-        $this->_smarty->assign('pages', $this->_pageModel->getPagesWithCategory());
+        $this->_smarty->assign('pages', $this->_pageModel->getWithCategory());
         $this->_smarty->display('pages.tpl');
     }
 
-    public function page($slug)
+    public function page($slug = '')
     {
-        $page = $this->_pageModel->getPageBySlug($slug);
+        $page = $this->_pageModel->getBySlug($slug);
+        if (!$page)
+            Core::show404('page');
         $this->_smarty->assign('mainTitle',
                                $page['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
         $this->_smarty->assign('pageTitle', $page['title']);
         $this->_smarty->assign('description', $page['description']);
         $this->_smarty->assign('content', $page['content']);
         $this->_smarty->display('page.tpl');
+    }
+
+    public function category($category = '')
+    {
+        $category = $this->_categoryModel->getBySlug($category);
+        $pages = $this->_pageModel->getByCategoryId($category['id']);
+        if (!$pages)
+            Core::show404('page');
+        $this->_smarty->assign('mainTitle',
+                               $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
+        $this->_smarty->assign('description', $category['description']);
+        $this->_smarty->assign('pages', $pages);
+        $this->_smarty->display('pages.tpl');
     }
 }

@@ -22,7 +22,7 @@ use core\Model;
  */
 class ConfigModel extends Model
 {
-    public function getConfig()
+    public function get()
     {
         $query = "SELECT * FROM config";
         return $this->_db->fetchRow($query);

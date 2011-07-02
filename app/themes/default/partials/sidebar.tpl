@@ -5,7 +5,7 @@
         </header>
         <ul>
         {foreach $categories as $category}
-            <li><a href="{$url}/{$category.slug}">{$category.title}</a></li>
+            <li><a href="{$url}/site/category/{$category.slug}">{$category.title}</a></li>
         {/foreach}
         </ul>
     </section>

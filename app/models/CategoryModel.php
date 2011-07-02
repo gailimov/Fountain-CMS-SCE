@@ -22,9 +22,16 @@ use core\Model;
  */
 class CategoryModel extends Model
 {
-    public function getCategories()
+    public function getAll()
     {
         $query = "SELECT slug, title FROM category";
         return $this->_db->fetchAll($query);
+    }
+
+    public function getBySlug($slug)
+    {
+        $query = "SELECT id, title, description FROM category
+                  WHERE slug = ?";
+        return $this->_db->fetchRow($query, $slug);
     }
 }

@@ -22,7 +22,7 @@ use core\Model;
  */
 class PageModel extends Model
 {
-    public function getPagesWithCategory()
+    public function getWithCategory()
     {
         $query = "SELECT * FROM page
                   WHERE category_id IS NOT NULL
@@ -30,17 +30,25 @@ class PageModel extends Model
         return $this->_db->fetchAll($query);
     }
 
-    public function getPagesWithoutCategory()
+    public function getWithoutCategory()
     {
         $query = "SELECT slug, title FROM page
                   WHERE category_id IS NULL";
         return $this->_db->fetchAll($query);
     }
 
-    public function getPageBySlug($slug)
+    public function getBySlug($slug)
     {
         $query = "SELECT * FROM page
                   WHERE slug = ?";
         return $this->_db->fetchRow($query, $slug);
+    }
+
+    public function getByCategoryId($categoryId)
+    {
+        $query = "SELECT * FROM page
+                  WHERE category_id = ?
+                  ORDER BY created_at DESC, id DESC";
+        return $this->_db->fetchAll($query, $categoryId);
     }
 }
