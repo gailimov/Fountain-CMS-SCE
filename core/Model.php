@@ -18,33 +18,24 @@ namespace core;
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class Db
+class Model
 {
     /**
      * PDO object
      * 
      * @var \PDO
      */
-    private $_connection;
+    protected $_db;
 
     public function __construct()
     {
         $config = Config::load('application');
-        $this->_connection = new \Zend\Db\Adapter\PdoMysql(array(
-            'host'     => $config['db']['host'],
-            'username' => $config['db']['username'],
-            'password' => $config['db']['password'],
-            'dbname'   => $config['db']['dbname']
+        $this->_db = new \Zend\Db\Adapter\PdoMysql(array(
+            'host'           => $config['db']['host'],
+            'username'       => $config['db']['username'],
+            'password'       => $config['db']['password'],
+            'dbname'         => $config['db']['dbname'],
+            'driver_options' => array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $config['db']['charset'])
         ));
-    }
-
-    /**
-     * Get database connection resource
-     * 
-     * @return object
-     */
-    public function getConnection()
-    {
-        return $this->_connection;
     }
 }

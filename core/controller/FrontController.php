@@ -13,8 +13,6 @@
 
 namespace core\controller;
 
-use core\controller\Router;
-
 /**
  * Front Controller
  * 

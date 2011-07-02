@@ -14,19 +14,29 @@
 namespace core;
 
 /**
- * View class
+ * Base controller
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class View
+class Controller
 {
+    /**
+     * View
+     * 
+     * @var \core\View
+     */
+    private $_view;
+
+    /**
+     * Smarty
+     * 
+     * @var \Smarty
+     */
+    protected $_smarty;
+
     public function __construct()
     {
-        $config = Config::load('application');
-        $smarty = new \Smarty();
-        $smarty->template_dir = APP_PATH . $config['themesFolder'] . DIRECTORY_SEPARATOR
-                                         . $config['defaultTheme'] . DIRECTORY_SEPARATOR;
-        $smarty->compile_dir  = ROOT_PATH . 'data' . DIRECTORY_SEPARATOR . 'themes_c' . DIRECTORY_SEPARATOR;
-        Registry::set('smarty', $smarty);
+        $this->_view = new View();
+        $this->_smarty = Registry::get('smarty');
     }
 }

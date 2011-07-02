@@ -20,13 +20,6 @@ namespace core;
  */
 class Config
 {
-    /**
-     * Config
-     * 
-     * @var array
-     */
-    private static $_config;
-
     private function __construct()
     {}
 
@@ -48,6 +41,6 @@ class Config
         } catch (\core\Exception $e) {
             die($e->getMessage());
         }
-        return self::$_config = require $configPath;
+        return require $configPath;
     }
 }

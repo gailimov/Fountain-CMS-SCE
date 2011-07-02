@@ -14,13 +14,14 @@
 /** Application config */
 return array(
     'defaultController' => 'SiteController',
-    'themesFolder' => 'themes',
-    'defaultTheme' => 'default',
-    'themesExtension' => '.tpl',
+    'themesFolder'      => 'themes',
+    'defaultTheme'      => 'default',
+    'titleSeparator'    => '|',
     'db' => array(
         'host'     => 'localhost',
         'username' => 'root',
         'password' => '1',
-        'dbname'   => 'projects_sfblog'
+        'dbname'   => 'projects_sitecard',
+        'charset'  => 'utf8'
     )
 );
