@@ -15,6 +15,7 @@ namespace core\controller;
 
 use core\Core,
     core\Config,
+    core\Registry,
     core\controller\Exception;
 
 /**
@@ -149,6 +150,14 @@ class Router
         // If the class of controller is not loaded or there is no necessary method - 404
         if (!is_callable(array($controller, $action)))
             Core::show404();
+
+        // Setting array of URI options
+        $options = array('controller' => $controller,
+                         'action'     => $action,
+                         'params'     => $params);
+
+        // Setting options into the registry
+        Registry::set('options', $options);
 
         // Create instance of controller class
         $obj = new $controller();

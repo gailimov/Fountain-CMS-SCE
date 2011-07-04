@@ -13,6 +13,10 @@
 
 namespace core;
 
+use core\View,
+    core\Registry,
+    core\controller\Request;
+
 /**
  * Base controller
  * 
@@ -20,6 +24,13 @@ namespace core;
  */
 class Controller
 {
+    /**
+     * Request
+     * 
+     * @var \core\Request
+     */
+    protected $_request;
+
     /**
      * View
      * 
@@ -36,6 +47,7 @@ class Controller
 
     public function __construct()
     {
+        $this->_request = new Request();
         $this->_view = new View();
         $this->_smarty = Registry::get('smarty');
     }
