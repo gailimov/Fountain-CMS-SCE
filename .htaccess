@@ -1,3 +1,22 @@
+AddDefaultCharset utf-8
+
+# Protect directories from being viewed
+RewriteEngine On
+Options +FollowSymlinks -Indexes
+RewriteBase /site-card
+RewriteRule ^.htaccess$ -[F]
+
+# Protect hidden files from being viewed
+<Files .*>
+order allow,deny
+deny from all
+</Files>
+
+# Protect files with .tpl extension from being viewed
+<Files *.tpl>
+Deny from all
+</Files>
+
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
