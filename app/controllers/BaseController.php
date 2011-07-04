@@ -61,6 +61,20 @@ class BaseController extends Controller
      */
     protected $_settings = array();
 
+    /**
+     * Instance of Pagify
+     * 
+     * @var \Pagify
+     */
+    protected $_pagify;
+
+    /**
+     * Number of entries on a page
+     * 
+     * @var int
+     */
+    protected $_perPage = 1;
+
     public function __construct()
     {
         parent::__construct();
@@ -81,6 +95,32 @@ class BaseController extends Controller
         $this->_smarty->assign('menu', $this->_pageModel->getWithoutCategory());
         $this->_categoryModel = new CategoryModel();
         $this->_smarty->assign('categories', $this->_categoryModel->getAll());
+        $this->_pagify = new \Pagify();
+    }
+
+    /**
+     * Get right page number for pagination
+     * 
+     * Examples:
+     *     Number of pages is a 10. Then:
+     *     http://site.com/pages/-1 == http://site.com/pages/1
+     *     http://site.com/pages/0 == http://site.com/pages/1
+     *     http://site.com/pages/100000 == http://site.com/pages/10
+     * 
+     * @param  int $page         Page number
+     * @param  int $postsCounter Count of posts
+     * @return int
+     */
+    protected function getPaginationRightPageNumber($page, $postsCounter)
+    {
+        $page = (int) $page;
+
+        if ($page > $postsCounter)
+            $page = $postsCounter;
+        elseif ($page <= 0)
+            $page = 1;
+
+        return $page;
     }
 
     /**

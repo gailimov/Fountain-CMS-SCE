@@ -27,31 +27,25 @@ class SiteController extends BaseController
     }
 
     public function index($page = 1)
-    {            
-        $page = (int) $page;
-
+    {
         $postsCounter = $this->_pageModel->countWithCategory();
 
-        if ($page > $postsCounter[0]['counter'])
-            $page = $postsCounter[0]['counter'];
-        elseif ($page <= 0)
-            $page = 1;
+        $page = $this->getPaginationRightPageNumber($page, $postsCounter[0]['counter']);
 
-        // Number of entries on a page
-        $perPage = 1;
-
-        $start = ($page - 1) * $perPage;
+        if ($page > 1)
+            $this->_smarty->assign('mainTitle',
+                                   $this->_settings['title'] . ' ' . $this->_config['titleSeparator'] . ' Страница ' . $page);
 
         // Pagination
-        $pagify = new Pagify();
         $config = $this->getPaginationConfig($postsCounter[0]['counter'],
                                              $this->_settings['url'] . '/pages/',
                                              $page,
-                                             $perPage);
-        $pagify->initialize($config);
+                                             $this->_perPage);
+        $this->_pagify->initialize($config);
 
-        $this->_smarty->assign('pages', $this->_pageModel->getWithCategory($start, $perPage));
-        $this->_smarty->assign('pagination', $pagify->get_links());
+        $this->_smarty->assign('pages', $this->_pageModel->getWithCategory(($page - 1) * $this->_perPage,
+                                                                            $this->_perPage));
+        $this->_smarty->assign('pagination', $this->_pagify->get_links());
         $this->_smarty->display('pages.tpl');
     }
 
@@ -70,39 +64,33 @@ class SiteController extends BaseController
 
     public function category($slug = '', $page = 1)
     {
-        $page = (int) $page;
-
         $category = $this->_categoryModel->getBySlug($slug);
 
         $postsCounter = $this->_pageModel->countByCategoryId($category['id']);
 
-        if ($page > $postsCounter[0]['counter'])
-            $page = $postsCounter[0]['counter'];
-        elseif ($page <= 0)
-            $page = 1;
+        $page = $this->getPaginationRightPageNumber($page, $postsCounter[0]['counter']);
 
-        // Number of entries on a page
-        $perPage = 1;
-
-        $start = ($page - 1) * $perPage;
+        if ($page > 1)
+            $this->_smarty->assign('mainTitle',
+                                   $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title'] . ' ' . $this->_config['titleSeparator'] . ' Страница ' . $page);
+        else
+            $this->_smarty->assign('mainTitle',
+                                   $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
 
         // Pagination
-        $pagify = new Pagify();
         $config = $this->getPaginationConfig($postsCounter[0]['counter'],
                                              $this->_settings['url'] . '/category/' . $slug . '/pages/',
                                              $page,
-                                             $perPage);
-        $pagify->initialize($config);
+                                             $this->_perPage);
+        $this->_pagify->initialize($config);
 
-        $pages = $this->_pageModel->getByCategoryId($category['id'], $start, $perPage);
+        $pages = $this->_pageModel->getByCategoryId($category['id'], ($page - 1) * $this->_perPage, $this->_perPage);
         if (!$pages)
             Core::show404('page');
 
-        $this->_smarty->assign('mainTitle',
-                               $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
         $this->_smarty->assign('description', $category['description']);
         $this->_smarty->assign('pages', $pages);
-        $this->_smarty->assign('pagination', $pagify->get_links());
+        $this->_smarty->assign('pagination', $this->_pagify->get_links());
         $this->_smarty->display('pages.tpl');
     }
 }
