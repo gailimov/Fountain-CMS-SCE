@@ -54,12 +54,13 @@ class PageModel extends Model
         return $this->_db->fetchRow($query, $slug);
     }
 
-    public function getByCategoryId($categoryId)
+    public function getByCategoryId($categoryId, $start, $perPage)
     {
         $query = "SELECT *
                   FROM " . $this->_table . "
                   WHERE category_id = ?
-                  ORDER BY created_at DESC, id DESC";
+                  ORDER BY created_at DESC, id DESC
+                  LIMIT {$start}, {$perPage}";
         return $this->_db->fetchAll($query, $categoryId);
     }
 
@@ -69,5 +70,13 @@ class PageModel extends Model
                   FROM " . $this->_table . "
                   WHERE category_id IS NOT NULL";
         return $this->_db->fetchAll($query);
+    }
+
+    public function countByCategoryId($categoryId)
+    {
+        $query = "SELECT COUNT(id) AS counter
+                  FROM " . $this->_table . "
+                  WHERE category_id = ?";
+        return $this->_db->fetchAll($query, $categoryId);
     }
 }

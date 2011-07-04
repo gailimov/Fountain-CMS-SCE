@@ -68,16 +68,41 @@ class SiteController extends BaseController
         $this->_smarty->display('page.tpl');
     }
 
-    public function category($category = '')
+    public function category($slug = '', $page = 1)
     {
-        $category = $this->_categoryModel->getBySlug($category);
-        $pages = $this->_pageModel->getByCategoryId($category['id']);
+        $page = (int) $page;
+
+        $category = $this->_categoryModel->getBySlug($slug);
+
+        $postsCounter = $this->_pageModel->countByCategoryId($category['id']);
+
+        if ($page > $postsCounter[0]['counter'])
+            $page = $postsCounter[0]['counter'];
+        elseif ($page <= 0)
+            $page = 1;
+
+        // Number of entries on a page
+        $perPage = 1;
+
+        $start = ($page - 1) * $perPage;
+
+        // Pagination
+        $pagify = new Pagify();
+        $config = $this->getPaginationConfig($postsCounter[0]['counter'],
+                                             $this->_settings['url'] . '/category/' . $slug . '/pages/',
+                                             $page,
+                                             $perPage);
+        $pagify->initialize($config);
+
+        $pages = $this->_pageModel->getByCategoryId($category['id'], $start, $perPage);
         if (!$pages)
             Core::show404('page');
+
         $this->_smarty->assign('mainTitle',
                                $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
         $this->_smarty->assign('description', $category['description']);
         $this->_smarty->assign('pages', $pages);
+        $this->_smarty->assign('pagination', $pagify->get_links());
         $this->_smarty->display('pages.tpl');
     }
 }
