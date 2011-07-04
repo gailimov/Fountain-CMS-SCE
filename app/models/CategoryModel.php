@@ -22,15 +22,22 @@ use core\Model;
  */
 class CategoryModel extends Model
 {
+    /**
+     * Table
+     * 
+     * @var string
+     */
+    private $_table = 'category';
+
     public function getAll()
     {
-        $query = "SELECT slug, title FROM category";
+        $query = "SELECT slug, title FROM " . $this->_table;
         return $this->_db->fetchAll($query);
     }
 
     public function getBySlug($slug)
     {
-        $query = "SELECT id, title, description FROM category
+        $query = "SELECT id, title, description FROM " . $this->_table . "
                   WHERE slug = ?";
         return $this->_db->fetchRow($query, $slug);
     }

@@ -22,9 +22,16 @@ use core\Model;
  */
 class ConfigModel extends Model
 {
+    /**
+     * Table
+     * 
+     * @var string
+     */
+    private $_table = 'config';
+
     public function get()
     {
-        $query = "SELECT * FROM config";
+        $query = "SELECT * FROM " . $this->_table;
         return $this->_db->fetchRow($query);
     }
 }

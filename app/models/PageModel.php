@@ -22,31 +22,48 @@ use core\Model;
  */
 class PageModel extends Model
 {
-    public function getWithCategory()
+    /**
+     * Table
+     * 
+     * @var string
+     */
+    private $_table = 'page';
+
+    public function getWithCategory($pageNumber)
     {
-        $query = "SELECT * FROM page
-                  WHERE category_id IS NOT NULL
-                  ORDER BY created_at DESC, id DESC";
-        return $this->_db->fetchAll($query);
+        $paginator = new \Zend\Paginator\Paginator(
+            new \Zend\Paginator\Adapter\DbSelect(
+                $this->_db->select()
+                          ->from($this->_table)
+                          ->where('category_id IS NOT NULL')
+                          ->order('created_at DESC')
+                          ->order('id DESC')
+            )
+        );
+        $paginator->setCurrentPageNumber($pageNumber)
+                  ->setItemCountPerPage(1)
+                  ->setPageRange(1);
+
+        return $paginator;
     }
 
     public function getWithoutCategory()
     {
-        $query = "SELECT slug, title FROM page
+        $query = "SELECT slug, title FROM " . $this->_table . "
                   WHERE category_id IS NULL";
         return $this->_db->fetchAll($query);
     }
 
     public function getBySlug($slug)
     {
-        $query = "SELECT * FROM page
+        $query = "SELECT * FROM " . $this->_table . "
                   WHERE slug = ?";
         return $this->_db->fetchRow($query, $slug);
     }
 
     public function getByCategoryId($categoryId)
     {
-        $query = "SELECT * FROM page
+        $query = "SELECT * FROM " . $this->_table . "
                   WHERE category_id = ?
                   ORDER BY created_at DESC, id DESC";
         return $this->_db->fetchAll($query, $categoryId);

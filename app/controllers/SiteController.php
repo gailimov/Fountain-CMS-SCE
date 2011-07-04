@@ -28,7 +28,11 @@ class SiteController extends BaseController
 
     public function index()
     {
-        $this->_smarty->assign('pages', $this->_pageModel->getWithCategory());
+        if (isset($_GET['page']))
+            $pageNumber = (int) $_GET['page'];
+        else
+            $pageNumber = 1;
+        $this->_smarty->assign('pages', $this->_pageModel->getWithCategory($pageNumber));
         $this->_smarty->display('pages.tpl');
     }
 
