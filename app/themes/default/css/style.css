@@ -104,6 +104,13 @@ a {
 
 .round {border-radius: 10px}
 
+.pagination {text-align: center}
+
+    .pagination ul li {
+        display: inline;
+        margin: 0 5px
+    }
+
 body {
     margin: 2% 0;
     font: 18px/26px Verdana, Tahoma, Arial, Helvetica;

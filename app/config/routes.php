@@ -14,5 +14,6 @@
 /** Routes config */
 return array(
     '/page\/([-_a-z0-9]+)/' => 'site/page/$1',
-    '/category\/([-_a-z0-9]+)/' => 'site/category/$1'
+    '/category\/([-_a-z0-9]+)/' => 'site/category/$1',
+    '/pages\/([0-9]+)/' => 'site/index/$1'
 );

@@ -82,4 +82,27 @@ class BaseController extends Controller
         $this->_categoryModel = new CategoryModel();
         $this->_smarty->assign('categories', $this->_categoryModel->getAll());
     }
+
+    /**
+     * Get pagination config
+     * 
+     * @param  int    $total   Total number of objects
+     * @param  string $url     URL
+     * @param  int    $page    Current page
+     * @param  int    $perPage Number of objects on a page
+     * @return array
+     */
+    protected function getPaginationConfig($total, $url, $page, $perPage)
+    {
+        return array(
+            'total'           => $total,
+            'url'             => $url,
+            'page'            => $page,
+            'per_page'        => $perPage,
+            'prev_link_text'  => 'Предыдущая',
+            'next_link_text'  => 'Следующая',
+            'first_link_text' => 'Первая',
+            'last_link_text'  => 'Последняя'
+        );
+    }
 }

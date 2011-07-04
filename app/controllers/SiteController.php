@@ -26,13 +26,32 @@ class SiteController extends BaseController
         parent::__construct();
     }
 
-    public function index()
-    {
-        if (isset($_GET['page']))
-            $pageNumber = (int) $_GET['page'];
-        else
-            $pageNumber = 1;
-        $this->_smarty->assign('pages', $this->_pageModel->getWithCategory($pageNumber));
+    public function index($page = 1)
+    {            
+        $page = (int) $page;
+
+        $postsCounter = $this->_pageModel->countWithCategory();
+
+        if ($page > $postsCounter[0]['counter'])
+            $page = $postsCounter[0]['counter'];
+        elseif ($page <= 0)
+            $page = 1;
+
+        // Number of entries on a page
+        $perPage = 1;
+
+        $start = ($page - 1) * $perPage;
+
+        // Pagination
+        $pagify = new Pagify();
+        $config = $this->getPaginationConfig($postsCounter[0]['counter'],
+                                             $this->_settings['url'] . '/pages/',
+                                             $page,
+                                             $perPage);
+        $pagify->initialize($config);
+
+        $this->_smarty->assign('pages', $this->_pageModel->getWithCategory($start, $perPage));
+        $this->_smarty->assign('pagination', $pagify->get_links());
         $this->_smarty->display('pages.tpl');
     }
 

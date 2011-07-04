@@ -8,6 +8,7 @@
         {$page.content}
     </article>
 {/foreach}
+{$pagination}
 </section>
 {include file='partials/sidebar.tpl'}
 {include file='partials/footer.tpl'}

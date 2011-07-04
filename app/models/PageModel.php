@@ -29,43 +29,45 @@ class PageModel extends Model
      */
     private $_table = 'page';
 
-    public function getWithCategory($pageNumber)
+    public function getWithCategory($start, $perPage)
     {
-        $paginator = new \Zend\Paginator\Paginator(
-            new \Zend\Paginator\Adapter\DbSelect(
-                $this->_db->select()
-                          ->from($this->_table)
-                          ->where('category_id IS NOT NULL')
-                          ->order('created_at DESC')
-                          ->order('id DESC')
-            )
-        );
-        $paginator->setCurrentPageNumber($pageNumber)
-                  ->setItemCountPerPage(1)
-                  ->setPageRange(1);
-
-        return $paginator;
+        $query = "SELECT *
+                  FROM " . $this->_table . "
+                  WHERE category_id IS NOT NULL
+                  LIMIT {$start}, {$perPage}";
+        return $this->_db->fetchAll($query);
     }
 
     public function getWithoutCategory()
     {
-        $query = "SELECT slug, title FROM " . $this->_table . "
+        $query = "SELECT slug, title
+                  FROM " . $this->_table . "
                   WHERE category_id IS NULL";
         return $this->_db->fetchAll($query);
     }
 
     public function getBySlug($slug)
     {
-        $query = "SELECT * FROM " . $this->_table . "
+        $query = "SELECT *
+                  FROM " . $this->_table . "
                   WHERE slug = ?";
         return $this->_db->fetchRow($query, $slug);
     }
 
     public function getByCategoryId($categoryId)
     {
-        $query = "SELECT * FROM " . $this->_table . "
+        $query = "SELECT *
+                  FROM " . $this->_table . "
                   WHERE category_id = ?
                   ORDER BY created_at DESC, id DESC";
         return $this->_db->fetchAll($query, $categoryId);
+    }
+
+    public function countWithCategory()
+    {
+        $query = "SELECT COUNT(id) AS counter
+                  FROM " . $this->_table . "
+                  WHERE category_id IS NOT NULL";
+        return $this->_db->fetchAll($query);
     }
 }
