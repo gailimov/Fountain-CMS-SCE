@@ -34,7 +34,7 @@ class SiteController extends BaseController
 
         if ($page > 1)
             $this->_smarty->assign('mainTitle',
-                                   $this->_settings['title'] . ' ' . $this->_config['titleSeparator'] . ' Страница ' . $page);
+                                   $this->_settings['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_language['page'] . ' ' . $page);
 
         // Pagination
         $config = $this->getPaginationConfig($postsCounter[0]['counter'],
@@ -72,7 +72,7 @@ class SiteController extends BaseController
 
         if ($page > 1)
             $this->_smarty->assign('mainTitle',
-                                   $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title'] . ' ' . $this->_config['titleSeparator'] . ' Страница ' . $page);
+                                   $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_language['page'] . ' ' . $page);
         else
             $this->_smarty->assign('mainTitle',
                                    $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);

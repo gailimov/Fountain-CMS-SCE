@@ -1,7 +1,7 @@
 <aside>
     <section>
         <header>
-            <h4>Категории</h4>
+            <h4>{$lang.categories}</h4>
         </header>
         <ul>
         {foreach $categories as $category}

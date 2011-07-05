@@ -15,6 +15,7 @@ namespace app\controllers;
 
 use core\Controller,
     core\Config,
+    core\Translator,
     app\models\ConfigModel,
     app\models\PageModel,
     app\models\CategoryModel;
@@ -32,6 +33,13 @@ class BaseController extends Controller
      * @var array
      */
     protected $_config;
+
+    /**
+     * Language
+     * 
+     * @var string
+     */
+    protected $_language;
 
     /**
      * Config model instance
@@ -79,6 +87,7 @@ class BaseController extends Controller
     {
         parent::__construct();
         $this->_config = Config::load('application');
+        $this->_language = Translator::load('interface', $this->_config['language']);
         $this->_smarty->assign('themePath',
                                'http://projects.loc/site-card'
                                . DIRECTORY_SEPARATOR . 'app'
@@ -91,6 +100,7 @@ class BaseController extends Controller
         $this->_smarty->assign('title', $this->_settings['title']);
         $this->_smarty->assign('mainTitle', $this->_settings['title']);
         $this->_smarty->assign('description', $this->_settings['description']);
+        $this->_smarty->assign('lang', $this->_language);
         $this->_pageModel = new PageModel();
         $this->_smarty->assign('menu', $this->_pageModel->getWithoutCategory());
         $this->_categoryModel = new CategoryModel();
@@ -139,10 +149,10 @@ class BaseController extends Controller
             'url'             => $url,
             'page'            => $page,
             'per_page'        => $perPage,
-            'prev_link_text'  => 'Предыдущая',
-            'next_link_text'  => 'Следующая',
-            'first_link_text' => 'Первая',
-            'last_link_text'  => 'Последняя'
+            'prev_link_text'  => $this->_language['previous'],
+            'next_link_text'  => $this->_language['next'],
+            'first_link_text' => $this->_language['first'],
+            'last_link_text'  => $this->_language['last']
         );
     }
 }

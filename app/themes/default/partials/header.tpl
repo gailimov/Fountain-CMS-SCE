@@ -14,7 +14,7 @@
             </header>
             <nav class="round">
                 <ul>
-                    <li><a href="{$url}" rel="home">Главная</a></li>
+                    <li><a href="{$url}" rel="home">{$lang.home}</a></li>
                 {foreach $menu as $nav}
                     <li><a href="{$url}/page/{$nav.slug}">{$nav.title}</a></li>
                 {/foreach}

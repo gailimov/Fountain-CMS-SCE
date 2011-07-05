@@ -17,6 +17,7 @@ return array(
     'themesFolder'      => 'themes',
     'defaultTheme'      => 'default',
     'titleSeparator'    => '|',
+    'language'          => 'ru',
     'db' => array(
         'host'     => 'localhost',
         'username' => 'root',
