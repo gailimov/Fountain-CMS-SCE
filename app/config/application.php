@@ -24,5 +24,12 @@ return array(
         'password' => '1',
         'dbname'   => 'projects_sitecard',
         'charset'  => 'utf8'
+    ),
+    'smtp' => array(
+        'host'       => 'smtp.gmail.com',
+        'username'   => '',
+        'password'   => '',
+        'port'       => '587',
+        'encryption' => 'tls'
     )
 );
