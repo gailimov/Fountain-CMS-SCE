@@ -1,11 +1,11 @@
 {include file='partials/header.tpl'}
-{if $pagePluginId == 0}
+{if $page.plugin_id == 0}
     <section class="content">
         <article>
             <header>
-                <h2>{$pageTitle}</h2>
+                <h2>{$page.title}</h2>
             </header>
-            {$content}
+            {$page.content}
         </article>
     </section>
 {else}

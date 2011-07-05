@@ -60,10 +60,8 @@ class SiteController extends BaseController
         $this->_smarty->assign('plugin', FeedbackController::getInstance()->index());
         $this->_smarty->assign('mainTitle',
                                $page['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
-        $this->_smarty->assign('pageTitle', $page['title']);
         $this->_smarty->assign('description', $page['description']);
-        $this->_smarty->assign('content', $page['content']);
-        $this->_smarty->assign('pagePluginId', $page['plugin_id']);
+        $this->_smarty->assign('page', $page);
         $this->_smarty->display('page.tpl');
     }
 

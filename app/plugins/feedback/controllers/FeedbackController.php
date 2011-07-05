@@ -14,15 +14,18 @@
 namespace app\plugins\feedback\controllers;
 
 use core\PluginController,
+    core\PluginInterface,
     core\Config,
-    core\Translator;
+    core\Translator,
+    app\models\ConfigModel,
+    app\plugins\feedback\models\ManagerModel;
 
 /**
  * Feedback plugin's controller
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class FeedbackController extends PluginController
+final class FeedbackController extends PluginController implements PluginInterface
 {
     /**
      * Singleton instance
@@ -76,11 +79,21 @@ class FeedbackController extends PluginController
 
     public function index()
     {
+        $managerModel = new ManagerModel();
+        $configModel = new ConfigModel();
+        $manager = $managerModel->get();
+        $settings = $configModel->get();
+
         if ($this->_request->isPost()) {
             $request = $this->_request->getPost('contactForm');
-            $name = $request['name'];
-            echo $name;
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+            $headers .= 'From: ' . htmlspecialchars(trim($request['name'])) . ' <' . htmlspecialchars(trim($request['email'])) . '>' . "\r\n";
+            $subject = 'Письмо с сайта «' . $settings['title'] . '»';
+            $message = nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>');
+            //mail($manager['email'], $subject, $message, $headers);
         }
+
         $this->_smarty->assign('lang', $this->_language);
         return $this->_smarty->fetch('feedback.tpl');
     }
