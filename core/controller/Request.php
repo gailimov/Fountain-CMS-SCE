@@ -127,4 +127,28 @@ class Request
             return true;
         return false;
     }
+
+    /**
+     * $_GET
+     * 
+     * @return mixed or array if key does not exist
+     */
+    public function getQuery($key = null)
+    {
+        if ($key == null)
+            return $_GET;
+        return $_GET[$key];
+    }
+
+    /**
+     * $_POST
+     * 
+     * @return mixed or array if key does not exist
+     */
+    public function getPost($key = null)
+    {
+        if ($key == null)
+            return $_POST;
+        return $_POST[$key];
+    }
 }

@@ -78,4 +78,17 @@ class Registry
             return self::getInstance()->_registry[$key];
         return null;
     }
+
+    /**
+     * Has registry an a value by key?
+     * 
+     * @param  string $key Key
+     * @return bool
+     */
+    public static function has($key)
+    {
+        if (isset(self::getInstance()->_registry[$key]))
+            return true;
+        return false;
+    }
 }

@@ -12,7 +12,8 @@
 
 
 use app\controllers\BaseController,
-    core\Core;
+    core\Core,
+    app\plugins\feedback\controllers\FeedbackController;
 
 /**
  * Site controller
@@ -52,13 +53,17 @@ class SiteController extends BaseController
     public function page($slug = '')
     {
         $page = $this->_pageModel->getBySlug($slug);
+
         if (!$page)
             Core::show404('page');
+
+        $this->_smarty->assign('plugin', FeedbackController::getInstance()->index());
         $this->_smarty->assign('mainTitle',
                                $page['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
         $this->_smarty->assign('pageTitle', $page['title']);
         $this->_smarty->assign('description', $page['description']);
         $this->_smarty->assign('content', $page['content']);
+        $this->_smarty->assign('pagePluginId', $page['plugin_id']);
         $this->_smarty->display('page.tpl');
     }
 

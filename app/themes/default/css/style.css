@@ -167,6 +167,39 @@ body {
             .content article {margin: 40px}
             
             .content article header {margin-bottom: 25px}
+            
+            .content article form div {margin: 5px 0}
+            
+                .content article form textarea {
+                    width: 400px;
+                    height: 150px;
+                    padding: 5px;
+                    font: 18px/26px Verdana, Tahoma, Arial, Helvetica;
+                    color: #696969;
+                    background: #fff;
+                    border: 1px solid #ccc
+                }
+                
+                    .content article form textarea:focus {border: 1px solid #696969}
+                
+                .content article form input {
+                    font: 18px/26px Verdana, Tahoma, Arial, Helvetica;
+                    color: #696969
+                }
+                
+                    .content article form input[type="text"],
+                    .content article form input[type="email"] {
+                        width: 200px;
+                        height: 20px;
+                        padding: 5px;
+                        background: #fff;
+                        border: 1px solid #ccc
+                    }
+                    
+                        .content article form input[type="text"]:focus,
+                        .content article form input[type="email"]:focus {border: 1px solid #696969}
+                    
+                    .content article form input[type="submit"] {cursor: pointer}
         
         aside {
             float: right;
