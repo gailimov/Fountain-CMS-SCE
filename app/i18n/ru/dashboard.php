@@ -12,12 +12,10 @@
 
 
 return array(
-    'home' => 'Главная',
-    'toTheHome' => 'На главную',
-    'categories' => 'Категории',
-    'previous' => 'Предыдущая',
-    'next' => 'Следующая',
-    'first' => 'Первая',
-    'last' => 'Последняя',
-    'page' => 'Страница'
+    'authentication' => 'Аутентификация',
+    'dashboard' => 'Панель администратора',
+    'backToTheSite' => 'Вернуться на сайт',
+    'username' => 'Логин',
+    'password' => 'Пароль',
+    'login' => 'Войти'
 );

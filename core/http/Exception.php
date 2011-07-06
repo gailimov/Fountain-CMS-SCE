@@ -11,13 +11,14 @@
  */
 
 
-return array(
-    'home' => 'Главная',
-    'toTheHome' => 'На главную',
-    'categories' => 'Категории',
-    'previous' => 'Предыдущая',
-    'next' => 'Следующая',
-    'first' => 'Первая',
-    'last' => 'Последняя',
-    'page' => 'Страница'
-);
+namespace core\http;
+
+use core\Exception as CoreException;
+
+/**
+ * Handler of HTTP exceptions
+ * 
+ * @author Kanat Gailimov <gailimov@gmail.com>
+ */
+class Exception extends CoreException
+{}

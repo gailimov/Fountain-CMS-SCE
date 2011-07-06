@@ -10,7 +10,7 @@
     <div id="wrapper" class="round">
         <div class="header">
             <header class="logo round">
-                <h1><a href="{$url}" rel="home" title="На главную">{$title}</a></h1>
+                <h1><a href="{$url}" rel="home" title="{$lang.toTheHome}">{$title}</a></h1>
             </header>
             <nav class="round">
                 <ul>

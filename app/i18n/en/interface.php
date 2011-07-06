@@ -13,6 +13,7 @@
 
 return array(
     'home' => 'Home',
+    'toTheHome' => 'To the home',
     'categories' => 'Categories',
     'previous' => 'Previous',
     'next' => 'Next',

@@ -11,7 +11,7 @@
  */
 
 
-namespace core\controller;
+namespace core\http;
 
 use core\Registry;
 

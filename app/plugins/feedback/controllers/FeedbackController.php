@@ -87,8 +87,8 @@ final class FeedbackController extends PluginController implements PluginInterfa
         // Errors
         $errors = array();
 
-        if ($this->_request->isPost()) {
-            $request = $this->_request->getPost('contactForm');
+        if ($this->getRequest()->isPost()) {
+            $request = $this->getRequest()->getPost('contactForm');
 
             // Validation
             if (empty($request['message']))

@@ -13,23 +13,24 @@
 
 namespace core;
 
-use core\View,
+use core\controller\AbstractController,
+    core\View,
     core\Registry,
-    core\controller\Request;
+    core\http\Request;
 
 /**
  * Base controller
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class Controller
+class Controller extends AbstractController
 {
     /**
-     * Request
+     * Config
      * 
-     * @var \core\Request
+     * @var array
      */
-    protected $_request;
+    private $_config;
 
     /**
      * View
@@ -45,11 +46,54 @@ class Controller
      */
     protected $_smarty;
 
+    /**
+     * Layout
+     * 
+     * @var string
+     */
+    private $_layout;
+
     public function __construct()
     {
-        $this->_request = new Request();
+        parent::__construct();
+        $this->_config = Config::load('application');
         $this->_view = new View();
         $this->_smarty = Registry::get('smarty');
+    }
+
+    /**
+     * Get config
+     * 
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->_config;
+    }
+
+    /**
+     * Set layout
+     * 
+     * @param  string $layout Layout
+     * @return obj
+     */
+    public function setLayout($layout)
+    {
+        $this->_layout = $layout;
+        return $this;
+    }
+
+    /**
+     * Get layout
+     * 
+     * @return string
+     */
+    public function getLayout()
+    {
+        return APP_PATH . $this->_config['themesFolder']
+                        . DIRECTORY_SEPARATOR
+                        . $this->_layout
+                        . $this->_config['templateExtension'];
     }
 
     /**
@@ -60,15 +104,13 @@ class Controller
      */
     public function render($template = null)
     {
-        $config = Config::load('application');
-
         if ($template == null)
-            $content = mb_strtolower($this->_smarty->template_dir . $this->_request->getController()
+            $content = mb_strtolower($this->_smarty->template_dir . $this->getRequest()->getController()
                                                                   . DIRECTORY_SEPARATOR
-                                                                  . $this->_request->getAction()
-                                                                  . $config['templateExtension']);
+                                                                  . $this->getRequest()->getAction()
+                                                                  . $this->_config['templateExtension']);
         else
-            $content = $this->_smarty->template_dir . $template . $config['templateExtension'];
+            $content = $this->_smarty->template_dir . $template . $this->_config['templateExtension'];
 
         try {
             if (!file_exists($content))
@@ -78,6 +120,12 @@ class Controller
         }
 
         $this->_smarty->assign('content', $content);
-        $this->_smarty->display($config['layoutsFolder'] . DIRECTORY_SEPARATOR . $config['layoutName'] . $config['templateExtension']);
+
+        if (empty($this->_layout))
+            $this->_smarty->display($this->_config['layoutsFolder'] . DIRECTORY_SEPARATOR
+                                                                    . $this->_config['layoutName']
+                                                                    . $this->_config['templateExtension']);
+        else
+            $this->_smarty->display($this->getLayout());
     }
 }

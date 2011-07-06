@@ -94,16 +94,16 @@ class BaseController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->_config = Config::load('application');
+        $this->_config = $this->getConfig();
         $this->_language = Translator::load('interface', $this->_config['language']);
+        $this->_configModel = new ConfigModel();
+        $this->_settings = $this->_configModel->get();
         $this->_smarty->assign('themePath',
-                               'http://projects.loc/site-card'
+                               $this->_settings['url']
                                . DIRECTORY_SEPARATOR . 'app'
                                . DIRECTORY_SEPARATOR . $this->_config['themesFolder']
                                . DIRECTORY_SEPARATOR . $this->_config['defaultTheme']
                                . DIRECTORY_SEPARATOR);
-        $this->_configModel = new ConfigModel();
-        $this->_settings = $this->_configModel->get();
         $this->_smarty->assign('url', $this->_settings['url']);
         $this->_smarty->assign('title', $this->_settings['title']);
         $this->_smarty->assign('mainTitle', $this->_settings['title']);

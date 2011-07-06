@@ -13,24 +13,18 @@
 
 namespace core;
 
-use core\PluginView,
+use core\controller\AbstractController,
+    core\PluginView,
     core\Registry,
-    core\controller\Request;
+    core\http\Request;
 
 /**
  * Plugins controller
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class PluginController
+class PluginController extends AbstractController
 {
-    /**
-     * Request
-     * 
-     * @var \core\Request
-     */
-    protected $_request;
-
     /**
      * View
      * 
@@ -47,7 +41,7 @@ class PluginController
 
     public function __construct($plugin)
     {
-        $this->_request = new Request();
+        parent::__construct();
         $this->_view = new PluginView($plugin);
         $this->_smarty = Registry::get('pluginsSmarty');
     }

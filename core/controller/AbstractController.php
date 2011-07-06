@@ -11,34 +11,36 @@
  */
 
 
-namespace core;
+namespace core\controller;
+
+use core\http\Request;
 
 /**
- * Core
+ * Controller abstract class
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class Core
+abstract class AbstractController
 {
     /**
-     * CMS name
-     */
-    const NAME = 'Fountain CMS SCE';
-
-    /**
-     * CMS Version
-     */
-    const VERSION = 'pre-alpha';
-
-    /**
-     * Show 404 error
+     * Request
      * 
-     * @param  string $page Page name
-     * @return void
+     * @var \core\http\Request
      */
-    public static function show404($page = '')
+    private $_request;
+
+    public function __construct()
     {
-        header("HTTP/1.1 404 Not Found");
-        die('Error 404: ' . $page . ' not found');
+        $this->_request = new Request();
+    }
+
+    /**
+     * Get request
+     * 
+     * @return \core\http\Request
+     */
+    public function getRequest()
+    {
+        return $this->_request;
     }
 }
