@@ -110,6 +110,11 @@ a {
         display: inline;
         margin: 0 5px
     }
+    
+.errors ul {
+    margin-left: 25px;
+    list-style-type: disc
+}
 
 body {
     margin: 2% 0;

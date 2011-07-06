@@ -84,31 +84,48 @@ final class FeedbackController extends PluginController implements PluginInterfa
         $manager = $managerModel->get();
         $settings = $configModel->get();
 
+        // Errors
+        $errors = array();
+
         if ($this->_request->isPost()) {
             $request = $this->_request->getPost('contactForm');
 
-            // Sending mail using Swift Mailer
+            // Validation
+            if (empty($request['message']))
+                $errors[] = $this->_language['writeAMessagePlease'];
+            if (empty($request['name']))
+                $errors[] = $this->_language['pleaseIntroduceYourself'];
+            if (empty($request['email']))
+                $errors[] = $this->_language['enterTheEmailPlease'];
+            if (!empty($request['email']) && filter_var($request['email'], FILTER_VALIDATE_EMAIL) == false)
+                $errors[] = $this->_language['enterAValidEmailPlease'];
 
-            require_once VENDOR_PATH . 'SwiftMailer' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'swift_required.php';
+            if (empty($errors)) {
+                // Sending mail using Swift Mailer
 
-            $transport = \Swift_SmtpTransport::newInstance()->setHost($this->_config['smtp']['host'])
-                                                            ->setPort($this->_config['smtp']['port'])
-                                                            ->setEncryption($this->_config['smtp']['encryption'])
-                                                            ->setUsername($this->_config['smtp']['username'])
-                                                            ->setPassword($this->_config['smtp']['password']);
+                require_once VENDOR_PATH . 'SwiftMailer' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'swift_required.php';
 
-            $mailer = \Swift_Mailer::newInstance($transport);
+                $transport = \Swift_SmtpTransport::newInstance()->setHost($this->_config['smtp']['host'])
+                                                                ->setPort($this->_config['smtp']['port'])
+                                                                ->setEncryption($this->_config['smtp']['encryption'])
+                                                                ->setUsername($this->_config['smtp']['username'])
+                                                                ->setPassword($this->_config['smtp']['password']);
 
-            $message = \Swift_Message::newInstance()->setSubject('Письмо с сайта «' . $settings['title'] . '»')
-                                                    ->setFrom(htmlspecialchars(trim($request['email'])))
-                                                    ->setTo($manager['email'])
-                                                    ->setBody(nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Email: ' . htmlspecialchars(trim($request['email'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>'), 'text/html')
-                                                    ->addPart(nl2br("Автор: " . htmlspecialchars(trim($request['name'])) . "\r\nТекст письма:\r\n" . htmlspecialchars(trim($request['message']))), 'text/plain');
+                $mailer = \Swift_Mailer::newInstance($transport);
 
-            $mailer->send($message);
+                $message = \Swift_Message::newInstance()->setSubject('Письмо с сайта «' . $settings['title'] . '»')
+                                                        ->setFrom(htmlspecialchars(trim($request['email'])))
+                                                        ->setTo($manager['email'])
+                                                        ->setBody(nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Email: ' . htmlspecialchars(trim($request['email'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>'), 'text/html')
+                                                        ->addPart(nl2br("Автор: " . htmlspecialchars(trim($request['name'])) . "\r\nТекст письма:\r\n" . htmlspecialchars(trim($request['message']))), 'text/plain');
+
+                $mailer->send($message);
+            }
         }
 
         $this->_smarty->assign('lang', $this->_language);
+        $this->_smarty->assign('errors', $errors);
+        if (isset($request)) $this->_smarty->assign('post', $request);
         return $this->_smarty->fetch('feedback.tpl');
     }
 }

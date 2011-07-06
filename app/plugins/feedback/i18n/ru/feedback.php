@@ -16,5 +16,10 @@ return array(
     'message' => 'Сообщение',
     'name' => 'Представьтесь',
     'email' => 'Email',
-    'sendMessage' => 'Отправить сообщение'
+    'sendMessage' => 'Отправить сообщение',
+    'youNeedToCorrectTheFollowingErrors' => 'Необходимо исправить следующие ошибки',
+    'writeAMessagePlease' => 'Впишите сообщение, пожалуйста',
+    'pleaseIntroduceYourself' => 'Представьтесь, пожалуйста',
+    'enterTheEmailPlease' => 'Впишите email, пожалуйста',
+    'enterAValidEmailPlease' => 'Впишите правильный email, пожалуйста'
 );

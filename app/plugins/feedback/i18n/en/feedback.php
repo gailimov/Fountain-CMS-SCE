@@ -16,5 +16,10 @@ return array(
     'message' => 'Message',
     'name' => 'Name',
     'email' => 'Email',
-    'sendMessage' => 'Send message'
+    'sendMessage' => 'Send message',
+    'youNeedToCorrectTheFollowingErrors' => 'You need to correct the following errors',
+    'writeAMessagePlease' => 'Write a message, please',
+    'pleaseIntroduceYourself' => 'Please introduce yourself',
+    'enterTheEmailPlease' => 'Enter the email, please',
+    'enterAValidEmailPlease' => 'Enter a valid email, please'
 );
