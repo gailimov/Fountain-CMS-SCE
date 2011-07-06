@@ -77,7 +77,7 @@ final class FeedbackController extends PluginController implements PluginInterfa
         return self::$_instance;
     }
 
-    public function index()
+    public function run()
     {
         $managerModel = new ManagerModel();
         $configModel = new ConfigModel();

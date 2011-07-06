@@ -18,7 +18,8 @@ use core\Controller,
     core\Translator,
     app\models\ConfigModel,
     app\models\PageModel,
-    app\models\CategoryModel;
+    app\models\CategoryModel,
+    app\models\PluginModel;
 
 /**
  * Application's base controller
@@ -63,6 +64,13 @@ class BaseController extends Controller
     protected $_categoryModel;
 
     /**
+     * Plugin model instance
+     * 
+     * @var \app\models\PluginModel
+     */
+    protected $_pluginModel;
+
+    /**
      * Settings
      * 
      * @var array
@@ -105,6 +113,7 @@ class BaseController extends Controller
         $this->_smarty->assign('menu', $this->_pageModel->getWithoutCategory());
         $this->_categoryModel = new CategoryModel();
         $this->_smarty->assign('categories', $this->_categoryModel->getAll());
+        $this->_pluginModel = new PluginModel();
         $this->_pagify = new \Pagify();
     }
 

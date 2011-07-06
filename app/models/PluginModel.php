@@ -11,23 +11,30 @@
  */
 
 
-namespace core;
+namespace app\models;
+
+use core\Model;
 
 /**
- * Plugin's interface
+ * Plugin model
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-interface PluginInterface
+class PluginModel extends Model
 {
-    public function __construct();
-
     /**
-     * Get singleton instance
+     * Table
      * 
-     * @return obj
+     * @var string
      */
-    public static function getInstance();
+    private $_table = 'plugin';
 
-    public function run();
+    public function getByid($id)
+    {
+        $query = "SELECT *
+                  FROM " . $this->_table . "
+                  WHERE id = ?
+                  LIMIT 1";
+        return $this->_db->fetchRow($query, $id);
+    }
 }

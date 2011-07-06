@@ -12,8 +12,7 @@
 
 
 use app\controllers\BaseController,
-    core\Core,
-    app\plugins\feedback\controllers\FeedbackController;
+    core\Core;
 
 /**
  * Site controller
@@ -57,7 +56,13 @@ class SiteController extends BaseController
         if (!$page)
             Core::show404('page');
 
-        $this->_smarty->assign('plugin', FeedbackController::getInstance()->index());
+        $plugin = $this->_pluginModel->getById($page['plugin_id']);
+
+        if ($plugin) {
+            $pluginControllerName = '\\app\\plugins\\feedback\\controllers\\' . ucfirst($plugin['name']) . 'Controller';
+            $this->_smarty->assign('plugin', $pluginControllerName::getInstance()->run());
+        }
+
         $this->_smarty->assign('mainTitle',
                                $page['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
         $this->_smarty->assign('description', $page['description']);
