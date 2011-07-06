@@ -29,7 +29,7 @@ return array(
         'host'       => 'smtp.gmail.com',
         'username'   => '',
         'password'   => '',
-        'port'       => '587',
-        'encryption' => 'tls'
+        'port'       => '465', // 587
+        'encryption' => 'ssl' // tls
     )
 );

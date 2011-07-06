@@ -86,34 +86,9 @@ final class FeedbackController extends PluginController implements PluginInterfa
 
         if ($this->_request->isPost()) {
             $request = $this->_request->getPost('contactForm');
-            /*$headers  = 'MIME-Version: 1.0' . "\r\n";
-            $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-            $headers .= 'From: ' . htmlspecialchars(trim($request['name'])) . ' <' . htmlspecialchars(trim($request['email'])) . '>' . "\r\n";
-            $subject = 'Письмо с сайта «' . $settings['title'] . '»';
-            $message = nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>');
-            //mail($manager['email'], $subject, $message, $headers);*/
 
-            //*// Sending mail using Zend\Mail
+            // Sending mail using Swift Mailer
 
-            $config = array('auth' => 'login',
-                            'username' => $this->_config['smtp']['username'],
-                            'password' => $this->_config['smtp']['password'],
-                            'ssl' => $this->_config['smtp']['encryption'],
-                            'port' => $this->_config['smtp']['port']);
-
-            $transport = new \Zend\Mail\Transport\Smtp($this->_config['smtp']['host'], $config);
-
-            $mail = new \Zend\Mail\Mail();
-            $mail->setBodyText(nl2br("Автор: " . htmlspecialchars(trim($request['name'])) . "\r\nТекст письма:\r\n" . htmlspecialchars(trim($request['message']))))
-                 ->setBodyHtml(nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>'))
-                 ->setFrom(htmlspecialchars(trim($request['email'])), htmlspecialchars(trim($request['name'])))
-                 ->addTo($manager['email'], $manager['username'])
-                 ->setSubject('Письмо с сайта «' . $settings['title'] . '»')
-                 ->send($transport);//*/
-
-            /*// Sending mail using SwiftMailer
-
-            // Load SwiftMailer
             require_once VENDOR_PATH . 'SwiftMailer' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'swift_required.php';
 
             $transport = \Swift_SmtpTransport::newInstance()->setHost($this->_config['smtp']['host'])
@@ -127,10 +102,10 @@ final class FeedbackController extends PluginController implements PluginInterfa
             $message = \Swift_Message::newInstance()->setSubject('Письмо с сайта «' . $settings['title'] . '»')
                                                     ->setFrom(htmlspecialchars(trim($request['email'])))
                                                     ->setTo($manager['email'])
-                                                    ->setBody(nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>'), 'text/html')
+                                                    ->setBody(nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Email: ' . htmlspecialchars(trim($request['email'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>'), 'text/html')
                                                     ->addPart(nl2br("Автор: " . htmlspecialchars(trim($request['name'])) . "\r\nТекст письма:\r\n" . htmlspecialchars(trim($request['message']))), 'text/plain');
 
-            $mailer->send($message);*/
+            $mailer->send($message);
         }
 
         $this->_smarty->assign('lang', $this->_language);
