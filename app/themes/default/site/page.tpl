@@ -1,4 +1,3 @@
-{include file='partials/header.tpl'}
 {if $page.plugin_id == 0}
     <section class="content">
         <article>
@@ -11,5 +10,3 @@
 {else}
     {$plugin}
 {/if}
-{include file='partials/sidebar.tpl'}
-{include file='partials/footer.tpl'}

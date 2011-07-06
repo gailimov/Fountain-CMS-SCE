@@ -152,7 +152,7 @@ class Router
             Core::show404();
 
         // Setting array of URI options
-        $options = array('controller' => $controller,
+        $options = array('controller' => str_replace('Controller', '', $controller),
                          'action'     => $action,
                          'params'     => $params);
 

@@ -16,6 +16,9 @@ return array(
     'defaultController' => 'SiteController',
     'themesFolder'      => 'themes',
     'defaultTheme'      => 'default',
+    'templateExtension' => '.tpl',
+    'layoutsFolder'     => 'layouts',
+    'layoutName'        => 'application',
     'titleSeparator'    => '|',
     'language'          => 'ru',
     'db' => array(

@@ -51,4 +51,33 @@ class Controller
         $this->_view = new View();
         $this->_smarty = Registry::get('smarty');
     }
+
+    /**
+     * Render partial template
+     * 
+     * @param  string $template Template
+     * @return void
+     */
+    public function render($template = null)
+    {
+        $config = Config::load('application');
+
+        if ($template == null)
+            $content = mb_strtolower($this->_smarty->template_dir . $this->_request->getController()
+                                                                  . DIRECTORY_SEPARATOR
+                                                                  . $this->_request->getAction()
+                                                                  . $config['templateExtension']);
+        else
+            $content = $this->_smarty->template_dir . $template . $config['templateExtension'];
+
+        try {
+            if (!file_exists($content))
+                throw new Exception('Template file "' . $content . '" not found');
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+
+        $this->_smarty->assign('content', $content);
+        $this->_smarty->display($config['layoutsFolder'] . DIRECTORY_SEPARATOR . $config['layoutName'] . $config['templateExtension']);
+    }
 }

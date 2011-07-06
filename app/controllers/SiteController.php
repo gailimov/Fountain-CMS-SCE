@@ -46,7 +46,7 @@ class SiteController extends BaseController
         $this->_smarty->assign('pages', $this->_pageModel->getWithCategory(($page - 1) * $this->_perPage,
                                                                             $this->_perPage));
         $this->_smarty->assign('pagination', $this->_pagify->get_links());
-        $this->_smarty->display('pages.tpl');
+        $this->render();
     }
 
     public function page($slug = '')
@@ -67,7 +67,7 @@ class SiteController extends BaseController
                                $page['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
         $this->_smarty->assign('description', $page['description']);
         $this->_smarty->assign('page', $page);
-        $this->_smarty->display('page.tpl');
+        $this->render();
     }
 
     public function category($slug = '', $page = 1)
@@ -99,6 +99,6 @@ class SiteController extends BaseController
         $this->_smarty->assign('description', $category['description']);
         $this->_smarty->assign('pages', $pages);
         $this->_smarty->assign('pagination', $this->_pagify->get_links());
-        $this->_smarty->display('pages.tpl');
+        $this->render();
     }
 }

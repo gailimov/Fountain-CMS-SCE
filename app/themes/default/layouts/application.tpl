@@ -21,3 +21,22 @@
                 </ul>
             </nav>
         </div> <!-- .header -->
+        {include file = $content}
+        <aside>
+            <section>
+                <header>
+                    <h4>{$lang.categories}</h4>
+                </header>
+                <ul>
+                {foreach $categories as $category}
+                    <li><a href="{$url}/category/{$category.slug}">{$category.title}</a></li>
+                {/foreach}
+                </ul>
+            </section>
+        </aside>
+        <footer>
+            <p>&copy; &laquo;{$title}&raquo; {$smarty.now|date_format: 'Y'}</p>
+        </footer>
+    </div> <!-- #wrapper -->
+</body>
+</html>
