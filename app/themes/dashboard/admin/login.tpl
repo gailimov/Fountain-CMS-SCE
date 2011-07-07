@@ -13,11 +13,21 @@
         <header>
             <h2>{$lang.authentication}</h2>
         </header>
+        {if $errors}
+            <div class="errors">
+                <p>{$lang.youNeedToCorrectTheFollowingErrors}:</p>
+                <ul>
+                {foreach $errors as $error}
+                    <li>{$error}</li>
+                {/foreach}
+                </ul>
+            </div>
+        {/if}
         <form action="#" method="post">
             <div><label for="username">{$lang.username}:</label></div>
-            <div><input type="text" name="user[username]" id="username" required /></div>
+            <div><input type="text" name="user[username]" id="username" value="{if isset($request)}{$request.username}{/if}" /></div>
             <div><label for="password">{$lang.password}:</label></div>
-            <div><input type="password" name="user[password]" id="password" required /></div>
+            <div><input type="password" name="user[password]" id="password" /></div>
             <div><input type="submit" value="{$lang.login}" /></div>
         </form>
     </section>

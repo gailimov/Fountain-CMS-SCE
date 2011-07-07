@@ -17,5 +17,6 @@ return array(
     'backToTheSite' => 'Back to the site',
     'username' => 'Username',
     'password' => 'Password',
-    'login' => 'Log in'
+    'login' => 'Log in',
+    'youNeedToCorrectTheFollowingErrors' => 'You need to correct the following errors'
 );

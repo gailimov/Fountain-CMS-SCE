@@ -17,5 +17,6 @@ return array(
     'backToTheSite' => 'Вернуться на сайт',
     'username' => 'Логин',
     'password' => 'Пароль',
-    'login' => 'Войти'
+    'login' => 'Войти',
+    'youNeedToCorrectTheFollowingErrors' => 'Необходимо исправить следующие ошибки',
 );

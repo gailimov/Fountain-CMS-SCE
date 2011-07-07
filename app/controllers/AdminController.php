@@ -13,8 +13,10 @@
 
 use app\controllers\BaseController,
     core\Core,
+    core\Authenticator,
     core\Translator,
-    core\http\Session;
+    core\http\Session,
+    app\models\ManagerModel;
 
 /**
  * Admin panel controller
@@ -30,11 +32,21 @@ class AdminController extends BaseController
      */
     private $_session;
 
+    /**
+     * Manager model instance
+     * 
+     * @var app\models\ManagerModel
+     */
+    private $_managerModel;
+
     public function __construct()
     {
         parent::__construct();
-        $this->_language = Translator::load('dashboard', $this->_config['language']);
         $this->_session = Session::getInstance();
+        // Starting session
+        $this->_session->start();
+        $this->_language = Translator::load('dashboard', $this->_config['language']);
+        $this->_managerModel = new ManagerModel();
         $this->_smarty->template_dir = APP_PATH . $this->_config['themesFolder']
                                                 . DIRECTORY_SEPARATOR
                                                 . 'dashboard'
@@ -55,18 +67,54 @@ class AdminController extends BaseController
 
     public function login()
     {
+        // Errors
+        $errors = array();
+
+        if ($this->getRequest()->isPost()) {
+            $request = $this->getRequest()->getPost('user');
+
+            // Validation
+            if (empty($request['username']))
+                $errors[] = 'Введите логин, пожалуйста';
+            if (empty($request['password']))
+                $errors[] = 'Введите пароль, пожалуйста';
+
+            if (empty($errors)) {
+                $auth = Authenticator::getInstance();
+
+                $manager = $this->_managerModel->get();
+
+                $auth->setIdentifier($manager['username'])
+                     ->setPassword($manager['password'])
+                     ->setInputIdentifier(htmlspecialchars(trim($request['username'])))
+                     ->setInputPassword($request['password']);
+
+                if ($auth->authenticate()) {
+                    $this->_session->set('admin', md5($manager['username']));
+                    $this->index();
+                    die;
+                } else {
+                    $errors[] = $auth->getError();
+                }
+            }
+        }
+
         $this->_smarty->assign('path', $this->_settings['url'] . DIRECTORY_SEPARATOR
                                                                . 'app'
                                                                . DIRECTORY_SEPARATOR
                                                                . $this->_config['themesFolder']
                                                                . DIRECTORY_SEPARATOR
                                                                . 'dashboard');
+        $this->_smarty->assign('errors', $errors);
+        if (isset($request)) $this->_smarty->assign('request', $request);
         $this->_smarty->display('admin/login.tpl');
     }
 
     public function logout()
     {
-        
+        $this->_session->destroy();
+        header('location: ' . $this->_settings['url'] . '/admin');
+        die;
     }
 
     /**
@@ -76,7 +124,8 @@ class AdminController extends BaseController
      */
     private function isLoggedIn()
     {
-        if (isset($this->_session->admin))
+        //if (isset($this->_session->admin))
+        if ($this->_session->has('admin'))
             return true;
         return false;
     }

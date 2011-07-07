@@ -75,6 +75,7 @@ class Session
         if ($this->isStarted())
             return;
         session_start();
+        $this->_started = true;
     }
 
     /**
@@ -88,6 +89,7 @@ class Session
         if ($this->_destroyed)
             return;
         session_destroy();
+        $this->_destroyed = true;
     }
 
     /**
@@ -98,6 +100,19 @@ class Session
     public function isStarted()
     {
         return $this->_started;
+    }
+
+    /**
+     * Set session
+     * 
+     * @param  mixed $key Key
+     * @param  mixed $value Value
+     * @return \core\http\Session
+     */
+    public function set($key, $value)
+    {
+        $_SESSION[$key] = $value;
+        return $this;
     }
 
     /**

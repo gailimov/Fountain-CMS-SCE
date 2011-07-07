@@ -100,6 +100,13 @@ a {
         text-decoration: underline
     }
     
+/** Classes */
+
+.errors ul {
+    margin-left: 25px;
+    list-style-type: disc
+}
+    
 body {
     margin: 2% 0;
     font: 16px/24px Verdana, Tahoma, Arial, Helvetica;
