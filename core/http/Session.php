@@ -41,8 +41,26 @@ class Session
      */
     private $_destroyed = false;
 
-    private function __construct()
-    {}
+    /**
+     * Namespace
+     * 
+     * @var string
+     */
+    private $_namespace;
+
+    /**
+     * Constructor
+     * 
+     * @param  string $namespace Namespace
+     * @return void
+     */
+    private function __construct($namespace = null)
+    {
+        if ($namespace == null)
+            $this->_namespace = 'default';
+        else
+            $this->_namespace = $namespace;
+    }
 
     private function __clone()
     {}
@@ -50,18 +68,34 @@ class Session
     /**
      * Get singleton instance
      * 
+     * @param  string $namespace Namespace
      * @return \core\http\Session
      */
-    public static function getInstance()
+    public static function getInstance($namespace = null)
     {
         if (!self::$_instance)
-            self::$_instance = new self();
+            self::$_instance = new self($namespace);
         return self::$_instance;
+    }
+
+    public function __set($property, $value)
+    {
+        $this->set($property, $value);
+    }
+
+    public function __get($property)
+    {
+        return $this->get($property);
     }
 
     public function __isset($property)
     {
-        $this->has($property);
+        return $this->has($property);
+    }
+
+    public function __unset($property)
+    {
+        unset($_SESSION[$property]);
     }
 
     /**
@@ -103,6 +137,28 @@ class Session
     }
 
     /**
+     * Set namespace
+     * 
+     * @param  string $namespace Namespace
+     * @return \core\http\Session
+     */
+    public function setNamespace($namespace)
+    {
+        $this->_namespace = $namespace;
+        return $this;
+    }
+
+    /**
+     * Get namespace
+     * 
+     * @return string
+     */
+    public function getNamespace($namespace)
+    {
+        return $this->_namespace;
+    }
+
+    /**
      * Set session
      * 
      * @param  mixed $key Key
@@ -111,7 +167,7 @@ class Session
      */
     public function set($key, $value)
     {
-        $_SESSION[$key] = $value;
+        $_SESSION[$this->_namespace][$key] = $value;
         return $this;
     }
 
@@ -124,7 +180,7 @@ class Session
     {
         if ($key == null)
             return $_SESSION;
-        return $_SESSION[$key];
+        return $_SESSION[$this->_namespace][$key];
     }
 
     /**
@@ -134,7 +190,7 @@ class Session
      */
     public function has($key)
     {
-        if (isset($_SESSION[$key]))
+        if (isset($_SESSION[$this->_namespace][$key]))
             return true;
         return false;
     }

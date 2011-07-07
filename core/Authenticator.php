@@ -28,32 +28,32 @@ class Authenticator
     private static $_instance;
 
     /**
-     * Identifier
+     * Identity
      * 
      * @var string
      */
-    private $_identifier;
+    private $_identity;
 
     /**
-     * Password
+     * Credential
      * 
      * @var string
      */
-    private $_password;
+    private $_credential;
 
     /**
-     * Input identifier
+     * Input identity
      * 
      * @var string
      */
-    private $_inputIdentifier;
+    private $_inputIdentity;
 
     /**
-     * Input password
+     * Input credential
      * 
      * @var string
      */
-    private $_inputPassword;
+    private $_inputCredential;
 
     /**
      * Error
@@ -81,50 +81,50 @@ class Authenticator
     }
 
     /**
-     * Set identifier
+     * Set identity
      * 
-     * @param  string $identifier Identifier
+     * @param  string $identity Identity
      * @return \core\Authenticator
      */
-    public function setIdentifier($identifier)
+    public function setIdentity($identity)
     {
-        $this->_identifier = $identifier;
+        $this->_identity = $identity;
         return $this;
     }
 
     /**
-     * Set password
+     * Set credential
      * 
-     * @param  string $password Password
+     * @param  string $credential Credential
      * @return \core\Authenticator
      */
-    public function setPassword($password)
+    public function setCredential($credential)
     {
-        $this->_password = $password;
+        $this->_credential = $credential;
         return $this;
     }
 
     /**
-     * Set input identifier
+     * Set input identity
      * 
-     * @param  string $inputIdentifier Input identifier
+     * @param  string $inputIdentity Input identity
      * @return \core\Authenticator
      */
-    public function setInputIdentifier($inputIdentifier)
+    public function setInputIdentity($inputIdentity)
     {
-        $this->_inputIdentifier = $inputIdentifier;
+        $this->_inputIdentity = $inputIdentity;
         return $this;
     }
 
     /**
-     * Set input password
+     * Set input credential
      * 
-     * @param  string $inputPassword Input password
+     * @param  string $inputCredential Input credential
      * @return \core\Authenticator
      */
-    public function setInputPassword($inputPassword)
+    public function setInputCredential($inputCredential)
     {
-        $this->_inputPassword = $inputPassword;
+        $this->_inputCredential = $inputCredential;
         return $this;
     }
 
@@ -145,10 +145,7 @@ class Authenticator
      */
     public function authenticate()
     {
-        /*if ($this->_inputIdentifier == $this->_identifier && $this->_inputPassword == $this->_password)
-            return true;
-        return false;*/
-        if ($this->_inputIdentifier != $this->_identifier || $this->_inputPassword != $this->_password) {
+        if ($this->_inputIdentity != $this->_identity || $this->_inputCredential != $this->_credential) {
             $this->_error = 'Неправильный логин или пароль';
             return false;
         }

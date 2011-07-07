@@ -84,13 +84,13 @@ class AdminController extends BaseController
 
                 $manager = $this->_managerModel->get();
 
-                $auth->setIdentifier($manager['username'])
-                     ->setPassword($manager['password'])
-                     ->setInputIdentifier(htmlspecialchars(trim($request['username'])))
-                     ->setInputPassword($request['password']);
+                $auth->setIdentity($manager['username'])
+                     ->setCredential($manager['password'])
+                     ->setInputIdentity(htmlspecialchars(trim($request['username'])))
+                     ->setInputCredential($request['password']);
 
                 if ($auth->authenticate()) {
-                    $this->_session->set('admin', md5($manager['username']));
+                    $this->_session->admin = md5($manager['username']);
                     $this->index();
                     die;
                 } else {
@@ -124,8 +124,7 @@ class AdminController extends BaseController
      */
     private function isLoggedIn()
     {
-        //if (isset($this->_session->admin))
-        if ($this->_session->has('admin'))
+        if (isset($this->_session->admin))
             return true;
         return false;
     }
