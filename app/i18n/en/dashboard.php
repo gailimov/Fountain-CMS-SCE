@@ -18,5 +18,18 @@ return array(
     'username' => 'Username',
     'password' => 'Password',
     'login' => 'Log in',
-    'youNeedToCorrectTheFollowingErrors' => 'You need to correct the following errors'
+    'youNeedToCorrectTheFollowingErrors' => 'You need to correct the following errors',
+    'enterYourUsernamePlease' => 'Enter your username, please',
+    'enterYourPasswordPlease' => 'Enter your password, please',
+    'wrongUsernameOrPassword' => 'Wrong username or password',
+    'welcome' => 'Welcome',
+    'editYourData' => 'Edit your data',
+    'signout' => 'Sign out',
+    'yourLastVisitWas' => 'Your last visit was',
+    'at' => 'at',
+    'withIPaddress' => 'with IP-address',
+    'pages' => 'Pages',
+    'categories' => 'Categories',
+    'plugins' => 'Plugins',
+    'settings' => 'Settings'
 );

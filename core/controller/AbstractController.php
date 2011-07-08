@@ -13,7 +13,8 @@
 
 namespace core\controller;
 
-use core\http\Request;
+use core\http\Request,
+    core\http\Response;
 
 /**
  * Controller abstract class
@@ -29,9 +30,17 @@ abstract class AbstractController
      */
     private $_request;
 
+    /**
+     * Response
+     * 
+     * @var \core\http\Response
+     */
+    private $_response;
+
     public function __construct()
     {
         $this->_request = new Request();
+        $this->_response = new Response();
     }
 
     /**
@@ -42,5 +51,15 @@ abstract class AbstractController
     public function getRequest()
     {
         return $this->_request;
+    }
+
+    /**
+     * Get response
+     * 
+     * @return \core\http\Response
+     */
+    public function getResponse()
+    {
+        return $this->_response;
     }
 }

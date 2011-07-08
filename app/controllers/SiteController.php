@@ -12,7 +12,7 @@
 
 
 use app\controllers\BaseController,
-    core\Core;
+    core\http\NotFoundException;
 
 /**
  * Site controller
@@ -54,7 +54,7 @@ class SiteController extends BaseController
         $page = $this->_pageModel->getBySlug($slug);
 
         if (!$page)
-            Core::show404('page');
+            throw new NotFoundException('Page not found');
 
         $plugin = $this->_pluginModel->getById($page['plugin_id']);
 
@@ -94,7 +94,7 @@ class SiteController extends BaseController
 
         $pages = $this->_pageModel->getByCategoryId($category['id'], ($page - 1) * $this->_perPage, $this->_perPage);
         if (!$pages)
-            Core::show404('page');
+            throw new NotFoundException('Page not found');
 
         $this->_smarty->assign('description', $category['description']);
         $this->_smarty->assign('pages', $pages);

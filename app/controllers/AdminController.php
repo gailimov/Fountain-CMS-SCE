@@ -52,6 +52,12 @@ class AdminController extends BaseController
                                                 . 'dashboard'
                                                 . DIRECTORY_SEPARATOR;
         $this->setLayout('dashboard/layouts/dashboard');
+        $this->_smarty->assign('path', $this->_settings['url'] . DIRECTORY_SEPARATOR
+                                                               . 'app'
+                                                               . DIRECTORY_SEPARATOR
+                                                               . $this->_config['themesFolder']
+                                                               . DIRECTORY_SEPARATOR
+                                                               . 'dashboard');
         $this->_smarty->assign('lang', $this->_language);
         $this->_smarty->assign('name', Core::NAME);
         $this->_smarty->assign('version', Core::VERSION);
@@ -59,62 +65,68 @@ class AdminController extends BaseController
 
     public function index()
     {
-        if ($this->isLoggedIn())
-            echo 'Dashboard';
-        else
+        if ($this->isLoggedIn()) {
+            $this->_smarty->assign('mainTitle', $this->_language['dashboard'] . ' | ' . Core::NAME);
+            $this->render();
+        } else {
             $this->login();
+        }
     }
 
     public function login()
     {
-        // Errors
-        $errors = array();
+        if (!$this->isLoggedIn()) {
+            // Errors
+            $errors = array();
 
-        if ($this->getRequest()->isPost()) {
-            $request = $this->getRequest()->getPost('user');
+            if ($this->getRequest()->isPost()) {
+                $request = $this->getRequest()->getPost('user');
 
-            // Validation
-            if (empty($request['username']))
-                $errors[] = 'Введите логин, пожалуйста';
-            if (empty($request['password']))
-                $errors[] = 'Введите пароль, пожалуйста';
+                // Validation
+                if (empty($request['username']))
+                    $errors[] = $this->_language['enterYourUsernamePlease'];
+                if (empty($request['password']))
+                    $errors[] = $this->_language['enterYourPasswordPlease'];
 
-            if (empty($errors)) {
-                $auth = Authenticator::getInstance();
+                if (empty($errors)) {
+                    $auth = Authenticator::getInstance();
 
-                $manager = $this->_managerModel->get();
+                    $manager = $this->_managerModel->get();
 
-                $auth->setIdentity($manager['username'])
-                     ->setCredential($manager['password'])
-                     ->setInputIdentity(htmlspecialchars(trim($request['username'])))
-                     ->setInputCredential($request['password']);
+                    $auth->setIdentity($manager['username'])
+                         ->setCredential($manager['password'])
+                         ->setInputIdentity(htmlspecialchars(trim($request['username'])))
+                         ->setInputCredential($request['password'])
+                         ->setErrorMessage($this->_language['wrongUsernameOrPassword']);
 
-                if ($auth->authenticate()) {
-                    $this->_session->admin = md5($manager['username']);
-                    $this->index();
-                    die;
-                } else {
-                    $errors[] = $auth->getError();
+                    if ($auth->authenticate()) {
+                        $this->_session->admin = md5($manager['username']);
+                        $this->index();
+                        die;
+                    } else {
+                        $errors[] = $auth->getError();
+                    }
                 }
             }
-        }
 
-        $this->_smarty->assign('path', $this->_settings['url'] . DIRECTORY_SEPARATOR
-                                                               . 'app'
-                                                               . DIRECTORY_SEPARATOR
-                                                               . $this->_config['themesFolder']
-                                                               . DIRECTORY_SEPARATOR
-                                                               . 'dashboard');
-        $this->_smarty->assign('errors', $errors);
-        if (isset($request)) $this->_smarty->assign('request', $request);
-        $this->_smarty->display('admin/login.tpl');
+            $this->_smarty->assign('path', $this->_settings['url'] . DIRECTORY_SEPARATOR
+                                                                   . 'app'
+                                                                   . DIRECTORY_SEPARATOR
+                                                                   . $this->_config['themesFolder']
+                                                                   . DIRECTORY_SEPARATOR
+                                                                   . 'dashboard');
+            $this->_smarty->assign('errors', $errors);
+            if (isset($request)) $this->_smarty->assign('request', $request);
+            $this->_smarty->display('admin/login.tpl');
+        } else {
+            $this->index();
+        }
     }
 
     public function logout()
     {
         $this->_session->destroy();
-        header('location: ' . $this->_settings['url'] . '/admin');
-        die;
+        $this->getResponse()->redirect($this->_settings['url'] . '/admin');
     }
 
     /**

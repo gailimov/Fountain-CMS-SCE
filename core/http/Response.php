@@ -11,22 +11,25 @@
  */
 
 
-namespace core;
+namespace core\http;
 
 /**
- * Core
+ * HTTP response class
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class Core
+class Response
 {
     /**
-     * CMS name
+     * Redirect
+     * 
+     * @param  string $url URL
+     * @todo   Use HTTP code
+     * @return void
      */
-    const NAME = 'Fountain CMS SCE';
-
-    /**
-     * CMS Version
-     */
-    const VERSION = 'pre-alpha';
+    public function redirect($url, $code = 302)
+    {
+        header('location: ' . $url);
+        die;
+    }
 }

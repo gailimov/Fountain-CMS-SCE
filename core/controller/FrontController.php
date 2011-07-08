@@ -13,6 +13,8 @@
 
 namespace core\controller;
 
+use core\http\NotFoundException;
+
 /**
  * Front Controller
  * 
@@ -53,6 +55,12 @@ class FrontController
     public function run()
     {
         $request = new Router();
-        $request->dispatch();
+        try {
+            $request->dispatch();
+        } catch (NotFoundException $e) {
+            $e->show404();
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 }

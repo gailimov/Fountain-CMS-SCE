@@ -13,10 +13,10 @@
 
 namespace core\controller;
 
-use core\Core,
-    core\Config,
+use core\Config,
     core\Registry,
-    core\controller\Exception;
+    core\controller\Exception,
+    core\http\NotFoundException;
 
 /**
  * Router
@@ -138,18 +138,14 @@ class Router
 
         $controllerFile = APP_PATH . 'controllers' . DIRECTORY_SEPARATOR . $controller . '.php';
 
-        try {
-            if (!file_exists($controllerFile))
-                throw new Exception('Controller "' . $controller . '" not found!');
-        } catch (Exception $e) {
-            die($e->getMessage());
-        }
+        if (!file_exists($controllerFile))
+            throw new Exception('Controller "' . $controller . '" not found!');
 
         require_once $controllerFile;
 
         // If the class of controller is not loaded or there is no necessary method - 404
         if (!is_callable(array($controller, $action)))
-            Core::show404();
+            throw new NotFoundException();
 
         // Setting array of URI options
         $options = array('controller' => str_replace('Controller', '', $controller),

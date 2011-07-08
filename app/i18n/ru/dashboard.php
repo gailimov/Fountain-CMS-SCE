@@ -19,4 +19,17 @@ return array(
     'password' => 'Пароль',
     'login' => 'Войти',
     'youNeedToCorrectTheFollowingErrors' => 'Необходимо исправить следующие ошибки',
+    'enterYourUsernamePlease' => 'Введите логин, пожалуйста',
+    'enterYourPasswordPlease' => 'Введите пароль, пожалуйста',
+    'wrongUsernameOrPassword' => 'Неправильный логин или пароль',
+    'welcome' => 'Добро пожаловать',
+    'editYourData' => 'Редактировать свои данные',
+    'signout' => 'Выйти',
+    'yourLastVisitWas' => 'Последний раз вы были',
+    'at' => 'в',
+    'withIPaddress' => 'с IP-адреса',
+    'pages' => 'Страницы',
+    'categories' => 'Категории',
+    'plugins' => 'Плагины',
+    'settings' => 'Настройки'
 );

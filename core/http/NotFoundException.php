@@ -11,22 +11,28 @@
  */
 
 
-namespace core;
+namespace core\http;
+
+use core\Exception as CoreException;
 
 /**
- * Core
+ * Not found exception
  * 
  * @author Kanat Gailimov <gailimov@gmail.com>
  */
-class Core
+class NotFoundException extends CoreException
 {
     /**
-     * CMS name
+     * Show 404 error
+     * 
+     * @return void
      */
-    const NAME = 'Fountain CMS SCE';
-
-    /**
-     * CMS Version
-     */
-    const VERSION = 'pre-alpha';
+    public function show404()
+    {
+        header("HTTP/1.1 404 Not Found");
+        if ($this->getMessage() == '') {
+            die('Error 404: not found');
+        }
+        die('Error 404: ' . $this->getMessage());
+    }
 }

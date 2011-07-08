@@ -56,6 +56,13 @@ class Authenticator
     private $_inputCredential;
 
     /**
+     * Error message
+     * 
+     * @var string
+     */
+    private $_errorMessage;
+
+    /**
      * Error
      * 
      * @var string
@@ -129,6 +136,18 @@ class Authenticator
     }
 
     /**
+     * Set error message
+     * 
+     * @param  string $errorMessage Error message
+     * @return \core\Authenticator
+     */
+    public function setErrorMessage($errorMessage)
+    {
+        $this->_errorMessage = $errorMessage;
+        return $this;
+    }
+
+    /**
      * Get error
      * 
      * @return string
@@ -146,7 +165,7 @@ class Authenticator
     public function authenticate()
     {
         if ($this->_inputIdentity != $this->_identity || $this->_inputCredential != $this->_credential) {
-            $this->_error = 'Неправильный логин или пароль';
+            $this->_error = $this->_errorMessage;
             return false;
         }
         return true;
