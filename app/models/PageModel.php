@@ -29,6 +29,14 @@ class PageModel extends Model
      */
     private $_table = 'page';
 
+    public function getAll($start, $perPage)
+    {
+        $query = "SELECT *
+                  FROM " . $this->_table . "
+                  LIMIT {$start}, {$perPage}";
+        return $this->_db->fetchAll($query);
+    }
+
     public function getWithCategory($start, $perPage)
     {
         $query = "SELECT *
@@ -62,6 +70,13 @@ class PageModel extends Model
                   ORDER BY created_at DESC, id DESC
                   LIMIT {$start}, {$perPage}";
         return $this->_db->fetchAll($query, $categoryId);
+    }
+
+    public function count()
+    {
+        $query = "SELECT COUNT(id) AS counter
+                  FROM " . $this->_table;
+        return $this->_db->fetchAll($query);
     }
 
     public function countWithCategory()

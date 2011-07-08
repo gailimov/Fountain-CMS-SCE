@@ -31,5 +31,16 @@ return array(
     'pages' => 'Pages',
     'categories' => 'Categories',
     'plugins' => 'Plugins',
-    'settings' => 'Settings'
+    'settings' => 'Settings',
+    'view' => 'View',
+    'add' => 'Add',
+    'edit' => 'Edit',
+    'title' => 'Title',
+    'category' => 'Category',
+    'createdAt' => 'Created at',
+    'updatedAt' => 'Updated at',
+    'previous' => 'Previous',
+    'next' => 'Next',
+    'first' => 'First',
+    'last' => 'Last'
 );

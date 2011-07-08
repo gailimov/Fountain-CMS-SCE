@@ -31,7 +31,7 @@ class CategoryModel extends Model
 
     public function getAll()
     {
-        $query = "SELECT slug, title FROM " . $this->_table;
+        $query = "SELECT id, slug, title FROM " . $this->_table;
         return $this->_db->fetchAll($query);
     }
 

@@ -21,7 +21,7 @@
         <nav>
             <ul>
                 <li><a href="{$url}/admin" class="active">{$lang.dashboard}</a></li>
-                <li><a href="#">{$lang.pages}</a></li>
+                <li><a href="{$url}/admin/pages">{$lang.pages}</a></li>
                 <li><a href="#">{$lang.categories}</a></li>
                 <li><a href="#">{$lang.plugins}</a></li>
                 <li><a href="#">{$lang.settings}</a></li>
