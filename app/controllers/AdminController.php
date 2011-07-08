@@ -61,6 +61,11 @@ class AdminController extends BaseController
         $this->_smarty->assign('lang', $this->_language);
         $this->_smarty->assign('name', Core::NAME);
         $this->_smarty->assign('version', Core::VERSION);
+        // if not logged in - redorect to login page
+        if (!$this->isLoggedIn()) {
+            $this->login();
+            die;
+        }
     }
 
     public function index()
@@ -119,7 +124,7 @@ class AdminController extends BaseController
             if (isset($request)) $this->_smarty->assign('request', $request);
             $this->_smarty->display('admin/login.tpl');
         } else {
-            $this->index();
+            $this->getResponse()->redirect($this->_settings['url'] . '/admin');
         }
     }
 
