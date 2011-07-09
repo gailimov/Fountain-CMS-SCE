@@ -54,6 +54,14 @@ class PageModel extends Model
         return $this->_db->fetchAll($query);
     }
 
+    public function getById($id)
+    {
+        $query = "SELECT *
+                  FROM " . $this->_table . "
+                  WHERE id = ?";
+        return $this->_db->fetchRow($query, $id);
+    }
+
     public function getBySlug($slug)
     {
         $query = "SELECT *

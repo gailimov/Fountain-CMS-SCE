@@ -4,7 +4,7 @@
             <h4>{$lang.pages}</h4>
         </header>
         <ul>
-            <li><a href="#" class="active">{$lang.view}</a></li>
+            <li><a href="{$url}/admin/pages" class="active">{$lang.view}</a></li>
             <li><a href="#">{$lang.add}</a></li>
             <li><a href="#">{$lang.edit}</a></li>
         </ul>
@@ -27,7 +27,7 @@
                 <td>{$page.title}</td>
                 <td>{$page.created_at}</td>
                 <td>{$page.updated_at}</td>
-                <td><a href="#"><img src="{$path}/img/edit.gif" title="{$lang.edit}" alt="{$lang.edit}" /></a></td>
+                <td><a href="{$url}/admin/pages/edit/{$page.id}"><img src="{$path}/img/edit.gif" title="{$lang.edit}" alt="{$lang.edit}" /></a></td>
             </tr>
         {/foreach}
         </table>

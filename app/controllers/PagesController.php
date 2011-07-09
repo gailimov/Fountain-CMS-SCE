@@ -46,4 +46,10 @@ class PagesController extends AdminController
         $this->_smarty->assign('pages', $this->_pageModel->getAll(($page - 1) * $this->_perPage, $this->_perPage));
         $this->_smarty->assign('pagination', $this->_pagify->get_links());
     }
+
+    public function edit($id)
+    {
+        $this->_smarty->assign('page', $this->_pageModel->getById($id));
+        $this->_smarty->assign('plugins', $this->_pluginModel->getAll());
+    }
 }

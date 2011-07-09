@@ -31,6 +31,7 @@ return array(
     'pages' => 'Pages',
     'categories' => 'Categories',
     'plugins' => 'Plugins',
+    'plugin' => 'Plugin',
     'settings' => 'Settings',
     'view' => 'View',
     'add' => 'Add',
@@ -42,5 +43,12 @@ return array(
     'previous' => 'Previous',
     'next' => 'Next',
     'first' => 'First',
-    'last' => 'Last'
+    'last' => 'Last',
+    'editPage' => 'Edit page',
+    'no' => 'No',
+    'permalink' => 'Permalink',
+    'description' => 'Description',
+    'content' => 'Content',
+    'save' => 'Save',
+    'delete' => 'Delete'
 );

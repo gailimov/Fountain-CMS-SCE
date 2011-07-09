@@ -29,6 +29,13 @@ class PluginModel extends Model
      */
     private $_table = 'plugin';
 
+    public function getAll()
+    {
+        $query = "SELECT *
+                  FROM " . $this->_table;
+        return $this->_db->fetchAll($query);
+    }
+
     public function getByid($id)
     {
         $query = "SELECT *
