@@ -154,14 +154,28 @@ class BaseController extends Controller
     protected function getPaginationConfig($total, $url, $page, $perPage)
     {
         return array(
-            'total'           => $total,
-            'url'             => $url,
-            'page'            => $page,
-            'per_page'        => $perPage,
-            'prev_link_text'  => $this->_language['previous'],
-            'next_link_text'  => $this->_language['next'],
-            'first_link_text' => $this->_language['first'],
-            'last_link_text'  => $this->_language['last']
+            'total'                       => $total,
+            'url'                         => $url,
+            'page'                        => $page,
+            'per_page'                    => $perPage,
+            'prev_link_text'              => $this->_language['previous'],
+            'next_link_text'              => $this->_language['next'],
+            'first_link_text'             => $this->_language['first'],
+            'last_link_text'              => $this->_language['last'],
+            'tag_open'                    => '<div class="pagination"><ul>',
+            'tag_close'                   => '</ul></div>',
+            'prev_link_tag_open'          => '<li>',
+            'prev_link_tag_close'         => '</li>',
+            'next_link_tag_open'          => '<li>',
+            'next_link_tag_close'         => '</li>',
+            'first_link_tag_open'         => '<li>',
+            'first_link_tag_close'        => '</li>',
+            'last_link_tag_open'          => '<li>',
+            'last_link_tag_close'         => '</li>',
+            'num_link_tag_open'           => '<li>',
+            'num_link_tag_close'          => '</li>',
+            'current_page_link_tag_open'  => '<li class="active">',
+            'current_page_link_tag_close' => '</li>'
         );
     }
 }
