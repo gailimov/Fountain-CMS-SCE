@@ -52,13 +52,29 @@ class Request
     }
 
     /**
+     * $_SERVER
+     * 
+     * @param  string $key     Key
+     * @param  mixed  $default Default value to use if key not found
+     * @return mixed or array if key does not exist
+     */
+    public function getServer($key = null, $default = null)
+    {
+        if ($key == null)
+            return $_SERVER;
+        if (isset($_SERVER[$key]))
+            return $_SERVER[$key];
+        return $default;
+    }
+
+    /**
      * Gets HTTP request method
      * 
      * @return string
      */
     public function getMethod()
     {
-        return $_SERVER['REQUEST_METHOD'];
+        return $this->getServer('REQUEST_METHOD');
     }
 
     /**

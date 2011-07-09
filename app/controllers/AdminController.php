@@ -70,10 +70,7 @@ class AdminController extends BaseController
 
     public function index()
     {
-        if ($this->isLoggedIn())
-            $this->_smarty->assign('mainTitle', $this->_language['dashboard'] . ' | ' . Core::NAME);
-        else
-            $this->login();
+        $this->_smarty->assign('mainTitle', $this->_language['dashboard'] . ' | ' . Core::NAME);
     }
 
     public function login()
@@ -104,8 +101,7 @@ class AdminController extends BaseController
 
                     if ($auth->authenticate()) {
                         $this->_session->admin = md5($manager['username']);
-                        $this->index();
-                        die;
+                        $this->getResponse()->redirect($this->getRequest()->getServer('HTTP_REFERER'));
                     } else {
                         $errors[] = $auth->getError();
                     }
