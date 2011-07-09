@@ -70,12 +70,10 @@ class AdminController extends BaseController
 
     public function index()
     {
-        if ($this->isLoggedIn()) {
+        if ($this->isLoggedIn())
             $this->_smarty->assign('mainTitle', $this->_language['dashboard'] . ' | ' . Core::NAME);
-            $this->render();
-        } else {
+        else
             $this->login();
-        }
     }
 
     public function login()

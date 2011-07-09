@@ -45,7 +45,5 @@ class PagesController extends AdminController
                                                                       . ' | ' . Core::NAME);
         $this->_smarty->assign('pages', $this->_pageModel->getAll(($page - 1) * $this->_perPage, $this->_perPage));
         $this->_smarty->assign('pagination', $this->_pagify->get_links());
-
-        $this->render();
     }
 }

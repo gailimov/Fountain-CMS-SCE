@@ -172,5 +172,8 @@ class Router
 
         // Calling controller's action with parameters
         call_user_func_array(array($obj, $action), $params);
+
+        // Render view
+        $obj->render();
     }
 }
