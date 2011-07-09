@@ -29,8 +29,17 @@ class FrontController
      */
     private static $_instance;
 
+    /**
+     * Router instance
+     * 
+     * @var \core\Controller\Router
+     */
+    private $_router;
+
     private function __construct()
-    {}
+    {
+        $this->_router = new Router();
+    }
 
     private function __clone()
     {}
@@ -48,15 +57,24 @@ class FrontController
     }
 
     /**
+     * Get router
+     * 
+     * @return \core\Controller\Router
+     */
+    public function getRouter()
+    {
+        return $this->_router;
+    }
+
+    /**
      * Running of router
      * 
      * @return void
      */
     public function run()
     {
-        $request = new Router();
         try {
-            $request->dispatch();
+            $this->_router->dispatch();
         } catch (NotFoundException $e) {
             $e->show404();
         } catch (Exception $e) {

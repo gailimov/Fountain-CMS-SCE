@@ -38,6 +38,18 @@ class Router
     }
 
     /**
+     * Add route
+     * 
+     * @param  string $pattern Route regex pattern
+     * @param  string $route   Route
+     * @return void
+     */
+    public function addRoute($pattern, $route)
+    {
+        $this->_routes[$pattern] = $route;
+    }
+
+    /**
      * Get URI
      * 
      * @return array
