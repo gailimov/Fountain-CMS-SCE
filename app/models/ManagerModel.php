@@ -13,7 +13,8 @@
 
 namespace app\models;
 
-use core\Model;
+use core\Model,
+    core\Registry;
 
 /**
  * Manager model
@@ -31,7 +32,9 @@ class ManagerModel extends Model
 
     public function get()
     {
-        $query = "SELECT * FROM " . $this->_table;
+        $lang = Registry::get('dashboard_i18n');
+        $query = "SELECT *, DATE_FORMAT(login_at, '%d.%m.%Y " . $lang['at'] . " %H:%i') AS formatted_login_at
+                  FROM " . $this->_table;
         return $this->_db->fetchRow($query);
     }
 }

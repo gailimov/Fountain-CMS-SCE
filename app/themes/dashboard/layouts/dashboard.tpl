@@ -13,15 +13,15 @@
             </div>
             <div class="info round">
                 <ul>
-                    <li>{$lang.welcome}, <a href="#" title="{$lang.editYourData}">admin</a>! | <a href="{$url}/admin/logout">{$lang.signout}</a></li>
-                    <li>{$lang.yourLastVisitWas} 28.06.2011 {$lang.at} 13:15 {$lang.withIPaddress} 127.0.0.1</li>
+                    <li>{$lang.welcome}, <a href="#" title="{$lang.editYourData}">{$manager.username}</a>! | <a href="{$url}/admin/logout">{$lang.signout}</a></li>
+                    <li>{$lang.yourLastVisitWas} {$manager.formatted_login_at} {$lang.withIPaddress} {$manager.last_ip}</li>
                 </ul>
             </div>
         </header> <!-- .header -->
         <nav>
             <ul>
-                <li><a href="{$url}/admin" class="active">{$lang.dashboard}</a></li>
-                <li><a href="{$url}/admin/pages">{$lang.pages}</a></li>
+                <li><a href="{$url}/admin"{if $controller == 'Admin'}class="active"{/if}>{$lang.dashboard}</a></li>
+                <li><a href="{$url}/admin/pages"{if $controller == 'Pages'}class="active"{/if}>{$lang.pages}</a></li>
                 <li><a href="#">{$lang.categories}</a></li>
                 <li><a href="#">{$lang.plugins}</a></li>
                 <li><a href="#">{$lang.settings}</a></li>

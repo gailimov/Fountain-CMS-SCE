@@ -13,6 +13,7 @@
 
 use app\controllers\BaseController,
     core\Core,
+    core\Registry,
     core\Authenticator,
     core\Translator,
     core\http\Session,
@@ -39,6 +40,13 @@ class AdminController extends BaseController
      */
     private $_managerModel;
 
+    /**
+     * Manager
+     * 
+     * @var array
+     */
+    private $_manager = array();
+
     public function __construct()
     {
         parent::__construct();
@@ -46,7 +54,10 @@ class AdminController extends BaseController
         // Starting session
         $this->_session->start();
         $this->_language = Translator::load('dashboard', $this->_config['language']);
+        Registry::set('dashboard_i18n', $this->_language);
         $this->_managerModel = new ManagerModel();
+        $this->_manager = $this->_managerModel->get();
+        $this->_manager['last_ip'] = long2ip($this->_manager['last_ip']);
         $this->_smarty->template_dir = APP_PATH . $this->_config['themesFolder']
                                                 . DIRECTORY_SEPARATOR
                                                 . 'dashboard'
@@ -61,6 +72,8 @@ class AdminController extends BaseController
         $this->_smarty->assign('lang', $this->_language);
         $this->_smarty->assign('name', Core::NAME);
         $this->_smarty->assign('version', Core::VERSION);
+        $this->_smarty->assign('manager', $this->_manager);
+        $this->_smarty->assign('controller', $this->getRequest()->getController());
         // if not logged in - redorect to login page
         if (!$this->isLoggedIn()) {
             $this->login();
@@ -91,10 +104,8 @@ class AdminController extends BaseController
                 if (empty($errors)) {
                     $auth = Authenticator::getInstance();
 
-                    $manager = $this->_managerModel->get();
-
-                    $auth->setIdentity($manager['username'])
-                         ->setCredential($manager['password'])
+                    $auth->setIdentity($this->_manager['username'])
+                         ->setCredential($this->_manager['password'])
                          ->setInputIdentity(htmlspecialchars(trim($request['username'])))
                          ->setInputCredential($request['password'])
                          ->setErrorMessage($this->_language['wrongUsernameOrPassword']);
