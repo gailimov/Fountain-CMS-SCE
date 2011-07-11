@@ -25,6 +25,8 @@ return array(
     '/category\/([-_a-z0-9]+)\/pages\/([0-9]+)/' => 'site/category/$1/$2',
     // http://site.com/admin/pages
     '/admin\/pages/' => 'pages/index',
+    // http://site.com/admin/pages/add
+    '/admin\/pages\/add/' => 'pages/add',
     // http://site.com/admin/pages/page/2
     '/admin\/pages\/page\/([0-9]+)/' => 'pages/index/$1',
     // http://site.com/admin/pages/edit/2

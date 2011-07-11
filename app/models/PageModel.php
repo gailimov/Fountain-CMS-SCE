@@ -33,6 +33,7 @@ class PageModel extends Model
     {
         $query = "SELECT *
                   FROM " . $this->_table . "
+                  ORDER BY created_at DESC, id DESC
                   LIMIT {$start}, {$perPage}";
         return $this->_db->fetchAll($query);
     }
@@ -42,6 +43,7 @@ class PageModel extends Model
         $query = "SELECT *
                   FROM " . $this->_table . "
                   WHERE category_id != 0
+                  ORDER BY created_at DESC, id DESC
                   LIMIT {$start}, {$perPage}";
         return $this->_db->fetchAll($query);
     }
@@ -103,10 +105,24 @@ class PageModel extends Model
         return $this->_db->fetchAll($query, $categoryId);
     }
 
+    public function add($data)
+    {
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $this->_db->insert($this->_table, $data);
+        return true;
+    }
+
     public function update($data, $id)
     {
         $data['updated_at'] = date('Y-m-d H:i:s');
         $this->_db->update($this->_table, $data, 'id = ' . $id);
+        return true;
+    }
+
+    public function delete($id)
+    {
+        $this->_db->delete($this->_table, 'id = ' . $id);
         return true;
     }
 }

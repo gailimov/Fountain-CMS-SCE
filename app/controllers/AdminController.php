@@ -47,6 +47,20 @@ class AdminController extends BaseController
      */
     private $_manager = array();
 
+    /**
+     * Error messages
+     * 
+     * @var array
+     */
+    protected $_errors = array();
+
+    /**
+     * Success message
+     * 
+     * @var string
+     */
+    protected $_success = null;
+
     public function __construct()
     {
         parent::__construct();

@@ -44,6 +44,7 @@ return array(
     'next' => 'Next',
     'first' => 'First',
     'last' => 'Last',
+    'addPage' => 'Add page',
     'editPage' => 'Edit page',
     'no' => 'No',
     'permalink' => 'Permalink',
@@ -54,5 +55,7 @@ return array(
     'enterTitlePlease' => 'Enter title, please',
     'enterPermalinkPlease' => 'Enter permalink, please',
     'enterContentPlease' => 'Enter content, please',
-    'pageSaved' => 'Page saved'
+    'pageAdded' => 'Page added',
+    'pageSaved' => 'Page saved',
+    'pageDeleted' => 'Page deleted'
 );

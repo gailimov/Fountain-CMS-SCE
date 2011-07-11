@@ -47,36 +47,60 @@ class PagesController extends AdminController
         $this->_smarty->assign('pagination', $this->_pagify->get_links());
     }
 
-    public function edit($id)
+    public function add()
     {
-        // Errors
-        $errors = array();
-        // Success message
-        $success = null;
-
         if ($this->getRequest()->isPost()) {
             $request = $this->getRequest()->getPost('page');
 
             // Validation
             if (empty($request['title']))
-                $errors[] = $this->_language['enterTitlePlease'];
+                $this->_errors[] = $this->_language['enterTitlePlease'];
             if (empty($request['slug']))
-                $errors[] = $this->_language['enterPermalinkPlease'];
+                $this->_errors[] = $this->_language['enterPermalinkPlease'];
             if (empty($request['content']))
-                $errors[] = $this->_language['enterContentPlease'];
+                $this->_errors[] = $this->_language['enterContentPlease'];
 
             // If data is valid
-            if (empty($errors)) {
+            if (empty($this->_errors)) {
+                if ($this->_pageModel->add($request))
+                    $this->_success = $this->_language['pageAdded'];
+            }
+        }
+
+        $this->_smarty->assign('plugins', $this->_pluginModel->getAll());
+        if (isset($request)) $this->_smarty->assign('request', $request);
+        $this->_smarty->assign('errors', $this->_errors);
+        $this->_smarty->assign('success', $this->_success);
+    }
+
+    public function edit($id)
+    {
+        if ($this->getRequest()->isPost()) {
+            $request = $this->getRequest()->getPost('page');
+
+            // Validation
+            if (empty($request['title']))
+                $this->_errors[] = $this->_language['enterTitlePlease'];
+            if (empty($request['slug']))
+                $this->_errors[] = $this->_language['enterPermalinkPlease'];
+            if (empty($request['content']))
+                $this->_errors[] = $this->_language['enterContentPlease'];
+
+            // If data is valid
+            if (empty($this->_errors)) {
                 if ($this->getRequest()->has('save')) {
-                    if ($this->_pageModel->update($this->getRequest()->getPost('page'), $id))
-                        $success = $this->_language['pageSaved'];
+                    if ($this->_pageModel->update($request, $id))
+                        $this->_success = $this->_language['pageSaved'];
+                } elseif ($this->getRequest()->has('delete')) {
+                    if ($this->_pageModel->delete($id))
+                        $this->_success = $this->_language['pageDeleted'];
                 }
             }
         }
 
         $this->_smarty->assign('page', $this->_pageModel->getById($id));
         $this->_smarty->assign('plugins', $this->_pluginModel->getAll());
-        $this->_smarty->assign('errors', $errors);
-        $this->_smarty->assign('success', $success);
+        $this->_smarty->assign('errors', $this->_errors);
+        $this->_smarty->assign('success', $this->_success);
     }
 }

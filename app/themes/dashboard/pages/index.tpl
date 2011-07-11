@@ -5,8 +5,7 @@
         </header>
         <ul>
             <li><a href="{$url}/admin/pages" class="active">{$lang.view}</a></li>
-            <li><a href="#">{$lang.add}</a></li>
-            <li><a href="#">{$lang.edit}</a></li>
+            <li><a href="{$url}/admin/pages/add">{$lang.add}</a></li>
         </ul>
     </section>
 </aside>
