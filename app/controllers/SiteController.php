@@ -28,16 +28,16 @@ class SiteController extends BaseController
 
     public function index($page = 1)
     {
-        $postsCounter = $this->_pageModel->countWithCategory();
+        $pagesCounter = $this->_pageModel->countWithCategory();
 
-        $page = $this->getPaginationRightPageNumber($page, $postsCounter[0]['counter']);
+        $page = $this->getPaginationRightPageNumber($page, $pagesCounter[0]['counter']);
 
         if ($page > 1)
             $this->_smarty->assign('mainTitle',
                                    $this->_settings['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_language['page'] . ' ' . $page);
 
         // Pagination
-        $config = $this->getPaginationConfig($postsCounter[0]['counter'],
+        $config = $this->getPaginationConfig($pagesCounter[0]['counter'],
                                              $this->_settings['url'] . '/pages/',
                                              $page,
                                              $this->_perPage);
@@ -72,9 +72,9 @@ class SiteController extends BaseController
     {
         $category = $this->_categoryModel->getBySlug($slug);
 
-        $postsCounter = $this->_pageModel->countByCategoryId($category['id']);
+        $pagesCounter = $this->_pageModel->countByCategoryId($category['id']);
 
-        $page = $this->getPaginationRightPageNumber($page, $postsCounter[0]['counter']);
+        $page = $this->getPaginationRightPageNumber($page, $pagesCounter[0]['counter']);
 
         if ($page > 1)
             $this->_smarty->assign('mainTitle',
@@ -84,7 +84,7 @@ class SiteController extends BaseController
                                    $category['title'] . ' ' . $this->_config['titleSeparator'] . ' ' . $this->_settings['title']);
 
         // Pagination
-        $config = $this->getPaginationConfig($postsCounter[0]['counter'],
+        $config = $this->getPaginationConfig($pagesCounter[0]['counter'],
                                              $this->_settings['url'] . '/category/' . $slug . '/pages/',
                                              $page,
                                              $this->_perPage);

@@ -105,6 +105,7 @@ class PageModel extends Model
 
     public function update($data, $id)
     {
+        $data['updated_at'] = date('Y-m-d H:i:s');
         $this->_db->update($this->_table, $data, 'id = ' . $id);
         return true;
     }
