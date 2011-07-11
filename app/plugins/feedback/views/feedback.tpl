@@ -13,6 +13,11 @@
                 </ul>
             </div>
         {/if}
+        {if $success}
+            <div class="success">
+                <p>{$success}</p>
+            </div>
+        {/if}
         <form action="#" method="post">
             <div><label for="message">{$lang.message}:</label></div>
             <div><textarea name="contactForm[message]" id="message" required>{if isset($post)}{$post.message}{/if}</textarea></div>

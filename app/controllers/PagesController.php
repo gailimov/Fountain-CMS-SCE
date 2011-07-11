@@ -62,15 +62,18 @@ class PagesController extends AdminController
 
             // If data is valid
             if (empty($this->_errors)) {
-                if ($this->_pageModel->add($request))
-                    $this->_success = $this->_language['pageAdded'];
+                if ($this->_pageModel->add($request)) {
+                    $this->index();
+                    $this->_smarty->assign('success', $this->_language['pageAdded']);
+                    $this->render('pages/index');
+                    die;
+                }
             }
         }
 
         $this->_smarty->assign('plugins', $this->_pluginModel->getAll());
         if (isset($request)) $this->_smarty->assign('request', $request);
         $this->_smarty->assign('errors', $this->_errors);
-        $this->_smarty->assign('success', $this->_success);
     }
 
     public function edit($id)
@@ -89,11 +92,19 @@ class PagesController extends AdminController
             // If data is valid
             if (empty($this->_errors)) {
                 if ($this->getRequest()->has('save')) {
-                    if ($this->_pageModel->update($request, $id))
-                        $this->_success = $this->_language['pageSaved'];
+                    if ($this->_pageModel->update($request, $id)) {
+                        $this->index();
+                        $this->_smarty->assign('success', $this->_language['pageSaved']);
+                        $this->render('pages/index');
+                        die;
+                    }
                 } elseif ($this->getRequest()->has('delete')) {
-                    if ($this->_pageModel->delete($id))
-                        $this->_success = $this->_language['pageDeleted'];
+                    if ($this->_pageModel->delete($id)) {
+                        $this->index();
+                        $this->_smarty->assign('success', $this->_language['pageDeleted']);
+                        $this->render('pages/index');
+                        die;
+                    }
                 }
             }
         }
@@ -101,6 +112,5 @@ class PagesController extends AdminController
         $this->_smarty->assign('page', $this->_pageModel->getById($id));
         $this->_smarty->assign('plugins', $this->_pluginModel->getAll());
         $this->_smarty->assign('errors', $this->_errors);
-        $this->_smarty->assign('success', $this->_success);
     }
 }

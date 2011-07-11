@@ -21,5 +21,6 @@ return array(
     'writeAMessagePlease' => 'Write a message, please',
     'pleaseIntroduceYourself' => 'Please introduce yourself',
     'enterTheEmailPlease' => 'Enter the email, please',
-    'enterAValidEmailPlease' => 'Enter a valid email, please'
+    'enterAValidEmailPlease' => 'Enter a valid email, please',
+    'messageSended' => 'Message sended'
 );

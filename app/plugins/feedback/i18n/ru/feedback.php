@@ -21,5 +21,6 @@ return array(
     'writeAMessagePlease' => 'Впишите сообщение, пожалуйста',
     'pleaseIntroduceYourself' => 'Представьтесь, пожалуйста',
     'enterTheEmailPlease' => 'Впишите email, пожалуйста',
-    'enterAValidEmailPlease' => 'Впишите правильный email, пожалуйста'
+    'enterAValidEmailPlease' => 'Впишите правильный email, пожалуйста',
+    'messageSended' => 'Сообщение отправлено'
 );

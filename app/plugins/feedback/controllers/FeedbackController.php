@@ -86,6 +86,8 @@ final class FeedbackController extends PluginController implements PluginInterfa
 
         // Errors
         $errors = array();
+        // Success message
+        $success = null;
 
         if ($this->getRequest()->isPost()) {
             $request = $this->getRequest()->getPost('contactForm');
@@ -119,12 +121,14 @@ final class FeedbackController extends PluginController implements PluginInterfa
                                                         ->setBody(nl2br('<p>Автор: ' . htmlspecialchars(trim($request['name'])) . '</p><p>Email: ' . htmlspecialchars(trim($request['email'])) . '</p><p>Текст письма:</p><p>' . htmlspecialchars(trim($request['message'])) . '</p>'), 'text/html')
                                                         ->addPart(nl2br("Автор: " . htmlspecialchars(trim($request['name'])) . "\r\nТекст письма:\r\n" . htmlspecialchars(trim($request['message']))), 'text/plain');
 
-                $mailer->send($message);
+                if ($mailer->send($message))
+                    $success = $this->_language['messageSended'];
             }
         }
 
         $this->_smarty->assign('lang', $this->_language);
         $this->_smarty->assign('errors', $errors);
+        $this->_smarty->assign('success', $success);
         if (isset($request)) $this->_smarty->assign('post', $request);
         return $this->_smarty->fetch('feedback.tpl');
     }

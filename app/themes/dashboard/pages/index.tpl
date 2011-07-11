@@ -11,6 +11,7 @@
 </aside>
 <section class="content">
     <article>
+        {include file = 'partials/success.tpl'}
         <header>
             <h2>{$lang.pages}</h2>
         </header>

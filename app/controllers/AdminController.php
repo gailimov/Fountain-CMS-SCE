@@ -88,6 +88,7 @@ class AdminController extends BaseController
         $this->_smarty->assign('version', Core::VERSION);
         $this->_smarty->assign('manager', $this->_manager);
         $this->_smarty->assign('controller', $this->getRequest()->getController());
+        $this->_smarty->assign('success', $this->_success);
         // if not logged in - redorect to login page
         if (!$this->isLoggedIn()) {
             $this->login();

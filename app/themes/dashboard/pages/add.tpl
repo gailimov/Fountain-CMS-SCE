@@ -14,7 +14,7 @@
         <header>
             <h2>{$lang.addPage}</h2>
         </header>
-        {include file = 'partials/notice.tpl'}
+        {include file = 'partials/error.tpl'}
         <form action="#" method="post" class="admin-form">
             <div><label>{$lang.category}:</label></div>
             <div>
