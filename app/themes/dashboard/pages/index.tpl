@@ -18,6 +18,7 @@
         <table>
             <tr>
                 <th>{$lang.title}</th>
+                <th>{$lang.category}</th>
                 <th>{$lang.createdAt}</th>
                 <th>{$lang.updatedAt}</th>
                 <th></th>
@@ -25,6 +26,14 @@
         {foreach $pages as $page}
             <tr>
                 <td>{$page.title}</td>
+            {foreach $categories as $category}
+                {if $category.id == $page.category_id}
+                    <td><a href="#" title="Посмотреть все страницы в этой категории">{$category.title}</a></td>
+                {/if}
+            {/foreach}
+            {if $page.category_id == 0}
+                <td><a href="#" title="Посмотреть все страницы в этой категории">{$lang.no}</a></td>
+            {/if}
                 <td>{$page.created_at}</td>
                 <td>{$page.updated_at}</td>
                 <td><a href="{$url}/admin/pages/edit/{$page.id}"><img src="{$path}/img/edit.gif" title="{$lang.edit}" alt="{$lang.edit}" /></a></td>

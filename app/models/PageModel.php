@@ -41,7 +41,7 @@ class PageModel extends Model
     {
         $query = "SELECT *
                   FROM " . $this->_table . "
-                  WHERE category_id IS NOT NULL
+                  WHERE category_id != 0
                   LIMIT {$start}, {$perPage}";
         return $this->_db->fetchAll($query);
     }
@@ -50,7 +50,7 @@ class PageModel extends Model
     {
         $query = "SELECT slug, title
                   FROM " . $this->_table . "
-                  WHERE category_id IS NULL";
+                  WHERE category_id = 0";
         return $this->_db->fetchAll($query);
     }
 
@@ -91,7 +91,7 @@ class PageModel extends Model
     {
         $query = "SELECT COUNT(id) AS counter
                   FROM " . $this->_table . "
-                  WHERE category_id IS NOT NULL";
+                  WHERE category_id != 0";
         return $this->_db->fetchAll($query);
     }
 
@@ -101,5 +101,11 @@ class PageModel extends Model
                   FROM " . $this->_table . "
                   WHERE category_id = ?";
         return $this->_db->fetchAll($query, $categoryId);
+    }
+
+    public function update($data, $id)
+    {
+        $this->_db->update($this->_table, $data, 'id = ' . $id);
+        return true;
     }
 }

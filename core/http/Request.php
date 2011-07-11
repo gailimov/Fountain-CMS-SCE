@@ -51,6 +51,11 @@ class Request
         $this->_params     = $options['params'];
     }
 
+    public function __isset($property)
+    {
+        return $this->has($property);
+    }
+
     /**
      * $_SERVER
      * 
@@ -166,5 +171,29 @@ class Request
         if ($key == null)
             return $_POST;
         return $_POST[$key];
+    }
+
+    /**
+     * Check to see if a key is set
+     * 
+     * @param  string $key Key
+     * @return bool
+     */
+    public function has($key)
+    {
+        switch (true) {
+            case isset($_GET[$key]):
+                return true;
+            case isset($_POST[$key]):
+                return true;
+            case isset($_COOKIE[$key]):
+                return true;
+            case isset($_SERVER[$key]):
+                return true;
+            case isset($_ENV[$key]):
+                return true;
+            default:
+                return false;
+        }
     }
 }

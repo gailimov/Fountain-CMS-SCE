@@ -49,7 +49,34 @@ class PagesController extends AdminController
 
     public function edit($id)
     {
+        // Errors
+        $errors = array();
+        // Success message
+        $success = null;
+
+        if ($this->getRequest()->isPost()) {
+            $request = $this->getRequest()->getPost('page');
+
+            // Validation
+            if (empty($request['title']))
+                $errors[] = $this->_language['enterTitlePlease'];
+            if (empty($request['slug']))
+                $errors[] = $this->_language['enterPermalinkPlease'];
+            if (empty($request['content']))
+                $errors[] = $this->_language['enterContentPlease'];
+
+            // If data is valid
+            if (empty($errors)) {
+                if ($this->getRequest()->has('save')) {
+                    if ($this->_pageModel->update($this->getRequest()->getPost('page'), $id))
+                        $success = $this->_language['pageSaved'];
+                }
+            }
+        }
+
         $this->_smarty->assign('page', $this->_pageModel->getById($id));
         $this->_smarty->assign('plugins', $this->_pluginModel->getAll());
+        $this->_smarty->assign('errors', $errors);
+        $this->_smarty->assign('success', $success);
     }
 }

@@ -50,5 +50,9 @@ return array(
     'description' => 'Описание',
     'content' => 'Содержание',
     'save' => 'Сохранить',
-    'delete' => 'Удалить'
+    'delete' => 'Удалить',
+    'enterTitlePlease' => 'Введите название, пожалуйста',
+    'enterPermalinkPlease' => 'Введите постоянную ссылку, пожалуйста',
+    'enterContentPlease' => 'Введите содержание, пожалуйста',
+    'pageSaved' => 'Страница сохранена'
 );

@@ -50,5 +50,9 @@ return array(
     'description' => 'Description',
     'content' => 'Content',
     'save' => 'Save',
-    'delete' => 'Delete'
+    'delete' => 'Delete',
+    'enterTitlePlease' => 'Enter title, please',
+    'enterPermalinkPlease' => 'Enter permalink, please',
+    'enterContentPlease' => 'Enter content, please',
+    'pageSaved' => 'Page saved'
 );

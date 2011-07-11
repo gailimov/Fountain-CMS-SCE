@@ -136,6 +136,11 @@ a {
                 background: #000;
                 border-radius: 10px
             }
+            
+.errors ul {
+    margin-left: 25px;
+    list-style-type: disc
+}
 
 /** Forms */
 

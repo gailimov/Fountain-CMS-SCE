@@ -15,6 +15,21 @@
         <header>
             <h2>{$lang.editPage}</h2>
         </header>
+        {if $errors}
+            <div class="errors">
+                <p>{$lang.youNeedToCorrectTheFollowingErrors}:</p>
+                <ul>
+                {foreach $errors as $error}
+                    <li>{$error}</li>
+                {/foreach}
+                </ul>
+            </div>
+        {/if}
+        {if $success}
+            <div class="success">
+                <p>{$success}</p>
+            </div>
+        {/if}
         <form action="#" method="post" class="admin-form">
             <div><label>{$lang.category}:</label></div>
             <div>
@@ -37,13 +52,13 @@
                 </select>
             </div>
             <div><label for="title">{$lang.title}:</label></div>
-            <div><input type="text" name="page[title]" id="title" value="{$page.title}" required /></div>
+            <div><input type="text" name="page[title]" id="title" value="{$page.title}" /></div>
             <div><label for="slug">{$lang.permalink}:</label></div>
-            <div><input type="text" name="page[slug]" id="slug" value="{$page.slug}" required /></div>
+            <div><input type="text" name="page[slug]" id="slug" value="{$page.slug}" /></div>
             <div><label for="description">{$lang.description}:</label></div>
             <div><input type="text" name="page[description]" id="description" value="{$page.description}" /></div>
             <div><label for="content">{$lang.content}:</label></div>
-            <div><textarea name="page[content]" id="content" required>{$page.content}</textarea></div>
+            <div><textarea name="page[content]" id="content">{$page.content}</textarea></div>
             <div>
                 <input type="submit" name="save" value="{$lang.save}" />
                 <input type="submit" name="delete" value="{$lang.delete}" />
